@@ -1,5 +1,0 @@
-# HTTrack Website Copier Cookie File
-# This file format is compatible with Netscape cookies
-.christopher.su	TRUE	/	FALSE	1999999999	__cfduid	d16e30307fe53214207de7f451c0c8fc71501693653
-.mathjax.org	TRUE	/	FALSE	1999999999	__cfduid	de4b60bba821e51d1cd50450fcd626bc81501693653
-
