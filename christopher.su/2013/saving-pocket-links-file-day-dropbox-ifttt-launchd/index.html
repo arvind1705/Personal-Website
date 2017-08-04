@@ -1,0 +1,85 @@
+<!DOCTYPE html><html>
+<!-- Mirrored from christopher.su/2013/saving-pocket-links-file-day-dropbox-ifttt-launchd/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 02 Aug 2017 17:06:49 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1"><title>Saving Pocket Links to a New File Every Day using Dropbox, IFTTT, and launchd - Christopher Su</title><script src="../../cdn-cgi/apps/head/Md70coOFj-W1ipSNpRLrMg41doI.js"></script><link rel="stylesheet" href="../../public/css/custom.css"><link href="https://fonts.googleapis.com/css?family=Open+Sans:700,400|Droid+Serif:400,700,400italic" rel="stylesheet" type="text/css"><link rel="shortcut icon" href="../../public/favicon.ico"><link rel="alternate" type="application/rss+xml" title="RSS" href="../../atom.xml"></head><body><div class="container content"><div class="masthead"><h3 class="masthead-title"><a href="../../index.html" title="Home">Christopher Su</a> <span class="top-nav nav-bar"><span class="top-nav-item"><a href="../../about/index.html" title="About">About</a></span> <span class="top-nav-item"><a href="../../projects/index.html" title="Projects">Projects</a></span> <span class="top-nav-item"><a href="../../contact/index.html" " title="Contact">Contact</a></span> <span class="top-nav-item"><a href="../../index/index.html" title="More">More</a></span></span></h3></div> <nav id="breadcrumb-nav" class="nav-bar"><span class="csu-breadcrumb"><a href="../../index.html">Home</a></span><ol class="csu-breadcrumbs" vocab="http://schema.org/" typeof="BreadcrumbList"><li class="csu-breadcrumb" property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" href="../../blog/index.html"><span property="name">Blog</span></a><meta property="position" content="1"></li> <li class="csu-breadcrumb active" property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" href="index.html"><span property="name">Saving Pocket Links to a New File Every Day using Dropbox, IFTTT, and launchd</span></a><meta property="position" content="2"></li></ol></nav> <div class="post"><div class="post-header"><h1 class="post-title">Saving Pocket Links to a New File Every Day using Dropbox, IFTTT, and launchd</h1><span class="post-date">March 27, 2013</span></div><div class="post-content"><p>For the past year, I’ve been saving interesting links by copying and pasting their URLs into Markdown files in a Git repository that were then browsable through a Gollum wiki. I created a new file each day and just made an unordered list of links that I found on that day. There were a few problems with this method:</p>
+
+<ol>
+  <li>While it was possible for me to create an automator action or something that would facilitate the process, I never bothered to do so and copying and pasting the links from the Chrome location bar into Sublime Text took too much time.</li>
+  <li>The title of the page wasn’t included and the URLs alone weren’t always enough to tell what the page included (ex. YouTube permalinks don’t provide very much information).</li>
+  <li>Technically, just pasting links into Markdown isn’t proper formatting. While most Markdown parsers will automatically link URLs, it’s more proper to wrap them in <code class="highlighter-rouge">&lt; and &gt;</code> if they’re bare URLs or using <code class="highlighter-rouge">[] and ()</code>.</li>
+</ol>
+
+<p>The solution:</p>
+
+<ol>
+  <li>Use Pocket to gather interesting links. I chose Pocket because it has tagging (although I don’t really use them because it takes time to enter them), excerpts (which come into play later), and a plethora of browser extensions, mobile apps, etc.</li>
+  <li>Use IFTTT to automatically take new links added to Pocket and insert them into text files in Dropbox which are then synced into Gollum.</li>
+</ol>
+
+<p>IFTTT can be set to trigger a Dropbox append action whenever a new link is added to Pocket. The parameters that IFTTT offers are also useful as they allow for some more information to be added to the link than just the URL, such as the page title and an excerpt (although the excerpts don’t always come out nicely). Here’s what I have in the “content” section of my IFTTT receipe:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>### []()&lt;br&gt;&lt;br&gt;&lt;i&gt;&lt;/i&gt;&lt;br&gt;&lt;br&gt;
+&lt;br&gt;&lt;br&gt;
+- - -&lt;br&gt;&lt;br&gt;
+</code></pre>
+</div>
+
+<p>I tried to use the AddedAt ingredient in the file name, but the ingredient returns the date and time the link was added in the following format: <code class="highlighter-rouge">March 22, 2013 at 12:40PM</code>, which isn’t very useful for our purposes.</p>
+
+<p>I’ve also <a href="https://ifttt.com/recipes/86555">shared my receipe</a>, in case anyone else wants to use and/or modify it.</p>
+
+<p><img src="../../assets/uploads/Screen-Shot-2013-03-27-at-3.00.23-PM.jpg" alt="" /></p>
+
+<p>There was only one problem with this: for some reason, IFTTT’s Dropbox actions don’t let you change the filename of the file you wish to append text to. In other words, rather than getting one text file of links for each day, one massive text file containing links from all days is created. I came up with a quick way to fix this: use launchd.</p>
+
+<p>I created a launchd file that runs a bash script every day at midnight that does the following:</p>
+
+<ol>
+  <li>Append a Markdown title with the date to the top of the text file (ex. <code class="highlighter-rouge">"# March 27, 2013 Links"</code>).</li>
+  <li>Rename the file in Dropbox created by IFTTT to the <code class="highlighter-rouge">YYYY-MM-DD.md</code> format.</li>
+</ol>
+
+<p>Here’s my launchd task:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">"1.0"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>Label<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>com.christophersu.dailylinks<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>ProgramArguments<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;array&gt;</span>
+        <span class="nt">&lt;string&gt;</span>/Users/christophersu/Dropbox-Gamma/Dropbox/Personal/Pocket/day.sh<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;/array&gt;</span>
+    <span class="nt">&lt;key&gt;</span>RunAtLoad<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;false/&gt;</span>
+    <span class="nt">&lt;key&gt;</span>StartCalendarInterval<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;array&gt;</span>
+        <span class="nt">&lt;dict&gt;</span>
+            <span class="nt">&lt;key&gt;</span>Hour<span class="nt">&lt;/key&gt;</span>
+            <span class="nt">&lt;integer&gt;</span>23<span class="nt">&lt;/integer&gt;</span>
+            <span class="nt">&lt;key&gt;</span>Minute<span class="nt">&lt;/key&gt;</span>
+            <span class="nt">&lt;integer&gt;</span>59<span class="nt">&lt;/integer&gt;</span>
+        <span class="nt">&lt;/dict&gt;</span>
+    <span class="nt">&lt;/array&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</code></pre>
+</div>
+
+<p>You’ll notice that it runs at 11:59 PM. This is because I wanted to append the proper title to the top of the file (<code class="highlighter-rouge">"# March 27, 2013"</code>) and have the correct date in the filename without having to write additional code in order to decrement the day counter and compensate for the last days of the month and such (if the decrement method is used, then when a “1″ is decremented, additional code is going to be needed to determine whether it should decrement to a “28″, “29″, “30″, or “31″). I didn’t want to have to deal with leap years and everything just to catch links that might have been saved between 11:59 PM and 12:00 PM.</p>
+
+<p>Here’s the bash script it runs:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c">#!/bin/bash  </span>
+<span class="nv">thedate</span><span class="o">=</span><span class="sb">`</span>date +%Y-%-m-%d<span class="sb">`</span>
+<span class="nv">titlevar</span><span class="o">=</span><span class="sb">`</span>date <span class="s1">'+%B %e, %Y'</span><span class="sb">`</span>
+<span class="c"># cd /Users/christophersu/Dropbox-Gamma/Dropbox/Personal/Pocket</span>
+<span class="nb">echo</span> -e <span class="s2">"# </span><span class="nv">$titlevar</span><span class="se">\n</span><span class="s2">"</span> | cat - /Users/christophersu/Dropbox-Gamma/Dropbox/Personal/Pocket/links.txt &gt; /Users/christophersu/Dropbox-Gamma/Dropbox/Personal/Pocket/temp <span class="o">&amp;&amp;</span> mv /Users/christophersu/Dropbox-Gamma/Dropbox/Personal/Pocket/temp /Users/christophersu/Dropbox-Gamma/Dropbox/Personal/Pocket/links.txt
+mv /Users/christophersu/Dropbox-Gamma/Dropbox/Personal/Pocket/links.txt /Users/christophersu/Dropbox-Gamma/Dropbox/Personal/Links/<span class="nv">$thedate</span>.md
+</code></pre>
+</div>
+
+</div></div><hr><div class="post-footer"><div id="comments"><h3>Comments</h3> <div id="disqus_thread"></div><script type="text/javascript">var disqus_shortname="christophersu";!function(){var e=document.createElement("script");e.type="text/javascript",e.async=!0,e.src="//"+disqus_shortname+".disqus.com/embed.js",(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(e)}();</script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></div><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script><div class="footer"><p class="copyright">&copy; 2012-2017 Christopher Su. All rights reserved.</p></div></div><script>!function(e,a,t,n,c,o,s){e.GoogleAnalyticsObject=c,e[c]=e[c]||function(){(e[c].q=e[c].q||[]).push(arguments)},e[c].l=1*new Date,o=a.createElement(t),s=a.getElementsByTagName(t)[0],o.async=1,o.src=n,s.parentNode.insertBefore(o,s)}(window,document,"script","../../../www.google-analytics.com/analytics.js","ga"),ga("create","UA-34248999-1","auto"),ga("send","pageview");</script> </body>
+<!-- Mirrored from christopher.su/2013/saving-pocket-links-file-day-dropbox-ifttt-launchd/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 02 Aug 2017 17:06:50 GMT -->
+</html>

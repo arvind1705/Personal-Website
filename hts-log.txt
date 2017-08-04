@@ -1,0 +1,22 @@
+HTTrack3.49-2+htsswf+htsjava launched on Wed, 02 Aug 2017 22:35:15 at https://christopher.su/ +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar
+(winhttrack -qwC2%Ps2u1%s%uN0%I0p3DaK0H0%kf2A25000%f#f -F "Mozilla/4.5 (compatible; HTTrack 3.0x; Windows 98)" -%F "<!-- Mirrored from %s%s by HTTrack Website Copier/3.x [XR&CO'2014], %s -->" -%l "en, *" https://christopher.su/ -O1 "C:\My Web Sites\test" +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar )
+
+Information, Warnings and Errors reported for this mirror:
+note:	the hts-log.txt file, and hts-cache folder, may contain sensitive information,
+	such as username/password authentication for websites mirrored in this project
+	do not share these files/folders if you want these information to remain private
+
+22:35:37	Error: 	"Not Found" (404) at link https://christopher.su/projects/tech-node.js (from https://christopher.su/projects/)
+22:35:57	Warning: 	Link https://christopher.su/cdn-cgi/l/email-protection not scanned (follow robots meta tag)
+22:35:59	Warning: 	Moved Permanently for christopher.su/robots.txt
+22:35:59	Warning: 	Redirected link is identical because of 'URL Hack' option: christopher.su/robots.txt and https://christopher.su/robots.txt
+22:35:59	Warning: 	Warning moved treated for christopher.su/robots.txt (real one is https://christopher.su/robots.txt)
+22:36:00	Warning: 	Moved Permanently for christopher.su/blog/page2/
+22:36:00	Warning: 	Redirected link is identical because of 'URL Hack' option: christopher.su/blog/page2/ and https://christopher.su/blog/page2/
+22:36:00	Warning: 	File has moved from christopher.su/blog/page2/ to https://christopher.su/blog/page2/
+22:37:24	Warning: 	Moved Permanently for christopher.su/interview/
+22:37:24	Warning: 	Redirected link is identical because of 'URL Hack' option: christopher.su/interview/ and https://christopher.su/interview/
+22:37:24	Warning: 	File has moved from christopher.su/interview/ to https://christopher.su/interview/
+
+HTTrack Website Copier/3.49-2 mirror complete in 2 minutes 20 seconds : 203 links scanned, 198 files written (13728309 bytes overall) [13090743 bytes received at 93505 bytes/sec], 1130601 bytes transferred using HTTP compression in 109 files, ratio 32%, 12.7 requests per connection
+(1 errors, 10 warnings, 0 messages)

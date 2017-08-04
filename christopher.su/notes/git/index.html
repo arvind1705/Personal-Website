@@ -1,0 +1,108 @@
+<!DOCTYPE html><html>
+<!-- Mirrored from christopher.su/notes/git/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 02 Aug 2017 17:07:20 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1"><title>Git Notes - Christopher Su</title><script src="../../cdn-cgi/apps/head/Md70coOFj-W1ipSNpRLrMg41doI.js"></script><link rel="stylesheet" href="../../public/css/custom.css"><link href="https://fonts.googleapis.com/css?family=Open+Sans:700,400|Droid+Serif:400,700,400italic" rel="stylesheet" type="text/css"><link rel="shortcut icon" href="../../public/favicon.ico"><link rel="alternate" type="application/rss+xml" title="RSS" href="../../atom.xml"></head><body><div class="container content"><div class="masthead"><h3 class="masthead-title"><a href="../../index.html" title="Home">Christopher Su</a> <span class="top-nav nav-bar"><span class="top-nav-item"><a href="../../about/index.html" title="About">About</a></span> <span class="top-nav-item"><a href="../../projects/index.html" title="Projects">Projects</a></span> <span class="top-nav-item"><a href="../../contact/index.html" " title="Contact">Contact</a></span> <span class="top-nav-item"><a href="../../index/index.html" title="More">More</a></span></span></h3></div> <nav id="breadcrumb-nav" class="nav-bar"><span class="csu-breadcrumb"><a href="../../index.html">Home</a></span><ol class="csu-breadcrumbs" vocab="http://schema.org/" typeof="BreadcrumbList"><li class="csu-breadcrumb" property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" href="../index.html"><span property="name">Notes</span></a><meta property="position" content="1"></li><li class="csu-breadcrumb active" property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" href="index.html"><span property="name">Git</span></a><meta property="position" content="2"></li> </ol></nav> <div class="page"><div class="page-header"><h1 class="page-title"> Git Notes </h1></div><div class="page-content"><div class="posts">                       <div class="post post-listing-post"><div class="post-header align-left"><h2 class="post-title"><a href="rename-capitalization/index.html">Change file name capitalization for Git on Mac</a></h2></div><div class="post-content"><p>Sometimes, depending on the file system, Git may not pick up case changes in filenames. To fix this, do the following:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git mv OldFiLename.thing temp.file
+git mv temp.file oldfilename.thing
+</code></pre>
+</div>
+</div></div>      <div class="post post-listing-post"><div class="post-header align-left"><h2 class="post-title"><a href="cherry-pick-commit/index.html">Cherry picking a commit</a></h2></div><div class="post-content"><div class="language-bash highlighter-rouge"><pre class="highlight"><code>git cherry-pick &lt;commit id&gt;
+</code></pre>
+</div>
+</div></div>      <div class="post post-listing-post"><div class="post-header align-left"><h2 class="post-title"><a href="count-lines-changed/index.html">Count the number of lines changed</a></h2></div><div class="post-content"><p>To count the number of lines added/edited between two commits or branches:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>git diff --stat &lt;commit or branch&gt; &lt;commit or branch&gt;
+</code></pre>
+</div>
+</div></div>      <div class="post post-listing-post"><div class="post-header align-left"><h2 class="post-title"><a href="delete-branch-local-remote/index.html">Delete git branch (local and remote)</a></h2></div><div class="post-content"><p>To delete the branch locally:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>git branch -d branch_name
+</code></pre>
+</div>
+
+<p>To delete the branch on the remote:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>git push origin --delete &lt;branch_name&gt;
+or git push origin :&lt;branch_name&gt; <span class="k">for </span>older git
+</code></pre>
+</div>
+</div></div>      <div class="post post-listing-post"><div class="post-header align-left"><h2 class="post-title"><a href="diff-branches/index.html">Diff two branches</a></h2></div><div class="post-content"><div class="language-bash highlighter-rouge"><pre class="highlight"><code>git diff branch_1..branch_2
+</code></pre>
+</div>
+</div></div>              <div class="post post-listing-post"><div class="post-header align-left"><h2 class="post-title"><a href="web-interface/index.html">Git web interface</a></h2></div><div class="post-content"><p>Git has a built-in web interface that can be started with the following:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>git instaweb --httpd<span class="o">=</span>webrick
+</code></pre>
+</div>
+</div></div>                        <div class="post post-listing-post"><div class="post-header align-left"><h2 class="post-title"><a href="move-commit-another-branch/index.html">Move a commit to another branch</a></h2></div><div class="post-content"><p>To move the last commit(s) to another branch, first make a new branch (this will include the commits from the current branch):</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git branch newbranch
+</code></pre>
+</div>
+
+<p>Remove the unwanted commit(s) from the current branch (the command below just removes the latest commit):</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git reset --hard HEAD^
+</code></pre>
+</div>
+
+<p>To remove <code class="highlighter-rouge">N</code> commits, you can use:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git reset --hard HEAD~N
+</code></pre>
+</div>
+
+<p>Now <code class="highlighter-rouge">newbranch</code> has the new commit(s) while the current branch no longer does.</p>
+</div></div>            <div class="post post-listing-post"><div class="post-header align-left"><h2 class="post-title"><a href="rebase-on-pull/index.html">Rebase on pull</a></h2></div><div class="post-content"><div class="language-bash highlighter-rouge"><pre class="highlight"><code>git pull --rebase &lt;remote&gt; &lt;branch&gt;
+</code></pre>
+</div>
+</div></div>            <div class="post post-listing-post"><div class="post-header align-left"><h2 class="post-title"><a href="remove-staged/index.html">Remove a staged file</a></h2></div><div class="post-content"><div class="language-bash highlighter-rouge"><pre class="highlight"><code>git reset &lt;filename&gt;
+</code></pre>
+</div>
+</div></div>      <div class="post post-listing-post"><div class="post-header align-left"><h2 class="post-title"><a href="remove-submodule/index.html">Remove a submodule</a></h2></div><div class="post-content"><p>To fully remove a submodule from a git repository:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c"># Remove from .gitmodules</span>
+git submodule deinit &lt;submodule_name&gt;
+
+<span class="c"># Remove from repository</span>
+rm -rf .git/modules/&lt;submodule_name&gt;
+</code></pre>
+</div>
+
+<p>For older versions of Git, you may need to do the following as well:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c"># Remove from config</span>
+git config --remove-section &lt;submodule_name&gt;
+
+<span class="c"># Remove from working tree</span>
+git rm --cached &lt;submodule_path&gt;
+</code></pre>
+</div>
+</div></div>      <div class="post post-listing-post"><div class="post-header align-left"><h2 class="post-title"><a href="revert-local-to-remote/index.html">Revert local branch back to remote branch</a></h2></div><div class="post-content"><div class="language-bash highlighter-rouge"><pre class="highlight"><code>git fetch origin
+git reset --hard origin/master
+</code></pre>
+</div>
+</div></div>      <div class="post post-listing-post"><div class="post-header align-left"><h2 class="post-title"><a href="squash-commits/index.html">Squashing commits</a></h2></div><div class="post-content"><p>Enter an interactive rebase session:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>git rebase -i &lt;commit id to start after&gt;
+</code></pre>
+</div>
+
+<p>In interactive mode, replace pick with squash for the commits to squash.</p>
+</div></div>      <div class="post post-listing-post"><div class="post-header align-left"><h2 class="post-title"><a href="undo-last-commit/index.html">Undo the last commit</a></h2></div><div class="post-content"><p>To undo the last commit, discarding the changes:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>git reset --hard HEAD~1
+</code></pre>
+</div>
+
+<p>To undo the last commit, keeping the changes:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>git reset HEAD^
+OR
+git reset --soft HEAD~1
+</code></pre>
+</div>
+</div></div>  </div></div></div><div class="footer"><p class="copyright">&copy; 2012-2017 Christopher Su. All rights reserved.</p></div></div><script>!function(e,a,t,n,c,o,s){e.GoogleAnalyticsObject=c,e[c]=e[c]||function(){(e[c].q=e[c].q||[]).push(arguments)},e[c].l=1*new Date,o=a.createElement(t),s=a.getElementsByTagName(t)[0],o.async=1,o.src=n,s.parentNode.insertBefore(o,s)}(window,document,"script","../../../www.google-analytics.com/analytics.js","ga"),ga("create","UA-34248999-1","auto"),ga("send","pageview");</script> </body>
+<!-- Mirrored from christopher.su/notes/git/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 02 Aug 2017 17:07:20 GMT -->
+</html>

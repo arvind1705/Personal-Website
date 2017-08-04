@@ -1,0 +1,152 @@
+<!DOCTYPE html><html>
+<!-- Mirrored from christopher.su/2012/system-tweaks-mac-experience/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 02 Aug 2017 17:07:18 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1"><title>System Tweaks For a Better Mac Experience - Christopher Su</title><script src="../../cdn-cgi/apps/head/Md70coOFj-W1ipSNpRLrMg41doI.js"></script><link rel="stylesheet" href="../../public/css/custom.css"><link href="https://fonts.googleapis.com/css?family=Open+Sans:700,400|Droid+Serif:400,700,400italic" rel="stylesheet" type="text/css"><link rel="shortcut icon" href="../../public/favicon.ico"><link rel="alternate" type="application/rss+xml" title="RSS" href="../../atom.xml"></head><body><div class="container content"><div class="masthead"><h3 class="masthead-title"><a href="../../index.html" title="Home">Christopher Su</a> <span class="top-nav nav-bar"><span class="top-nav-item"><a href="../../about/index.html" title="About">About</a></span> <span class="top-nav-item"><a href="../../projects/index.html" title="Projects">Projects</a></span> <span class="top-nav-item"><a href="../../contact/index.html" " title="Contact">Contact</a></span> <span class="top-nav-item"><a href="../../index/index.html" title="More">More</a></span></span></h3></div> <nav id="breadcrumb-nav" class="nav-bar"><span class="csu-breadcrumb"><a href="../../index.html">Home</a></span><ol class="csu-breadcrumbs" vocab="http://schema.org/" typeof="BreadcrumbList"><li class="csu-breadcrumb" property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" href="../../blog/index.html"><span property="name">Blog</span></a><meta property="position" content="1"></li> <li class="csu-breadcrumb active" property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" href="index.html"><span property="name">System Tweaks For a Better Mac Experience</span></a><meta property="position" content="2"></li></ol></nav> <div class="post"><div class="post-header"><h1 class="post-title">System Tweaks For a Better Mac Experience</h1><span class="post-date">August 26, 2012</span></div><div class="post-content"><p>Apply these tweaks by running the corresponding commands in Terminal (found at <code class="highlighter-rouge">/Applications/Utilities/Terminal.app</code>).</p>
+
+<h3 id="disable-dock-autoshow-delay">Disable Dock Autoshow Delay</h3>
+
+<p>I hide my dock to maximize the usable area of my screen. By default, there’s a short delay on the autoshowing dock animation. This removes the delay:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>defaults write com.apple.Dock autohide-delay -float 0 &amp;&amp; killall Dock 
+</code></pre>
+</div>
+
+<h3 id="show-the-library-folder-in-finder-lion-and-later">Show the Library Folder in Finder (Lion and later)</h3>
+
+<p>In Lion and Mountain Lion, the Library folder is hidden from view. This will make it appear in your home folder again:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>chflags nohidden ~/Library/ 
+</code></pre>
+</div>
+
+<h3 id="expanded-save-dialog-boxes-by-default">Expanded Save Dialog Boxes by Default</h3>
+
+<p>Having to press the little triangle to navigate through your filesystem everytime you save something is annoying. This makes save dialogs expanded by default:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>defaults write -g NSNavPanelExpandedStateForSaveMode -boolean true 
+</code></pre>
+</div>
+
+<h3 id="screenshot-location">Screenshot Location</h3>
+
+<p>I like to keep all of my screenshots, and I like to keep them in a secure location. The easiest way I found to do this was to create an encrypted sparseimage, mount it, and then change the screenshot location to that volume:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>defaults write com.apple.screencapture location /Volumes/Screenshots
+killall SystemUIServer 
+</code></pre>
+</div>
+
+<h3 id="screenshot-format">Screenshot Format</h3>
+
+<p>Because I never delete my screenshots, I opted to take them in the JPG format, rather than in PNG as screenshots don’t have much transparency/alpha to them and there isn’t a need for higher quality. Run this through terminal to change the file format for screenshots to JPG:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>defaults write com.apple.screencapture type jpg 
+</code></pre>
+</div>
+
+<p>Once again, killall SystemUIServer to apply changes. Other formats that work with this command are tiff and pdf.</p>
+
+<p><strong>Edit:</strong> Andy Lester points out in the comments that JPG screenshots are significantly lower in quality than those in the default PNG format. Specifically, he mentions problems with smearing between two colors where they meet and grey hazes around text.</p>
+
+<h3 id="show-hidden-files-in-finder">Show Hidden Files in Finder</h3>
+
+<p>Working with .htaccess, .gitignore, and other hidden files is a pain with hidden files in Finder. Show hidden files using this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>defaults write com.apple.finder AppleShowAllFiles TRUE
+killall Finder 
+</code></pre>
+</div>
+
+<h3 id="disable-dashboard">Disable Dashboard</h3>
+
+<p>Dashboard widgets are beginning to be replaced by web applications and menubar applications. Dashboard takes up system resources you could be using elsewhere.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>defaults write com.apple.dashboard mcx-disabled -boolean YES
+killall Dock 
+</code></pre>
+</div>
+
+<h3 id="remove-itunes-store-links-in-library">Remove iTunes Store Links in Library</h3>
+
+<p>By default, a little arrow appears next to each song in the iTunes library linking to the iTunes Store. This will give the arrow some actual useful functionality by having it point to other albums in the iTunes library:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>defaults write com.apple.iTunes invertStoreLinks -bool YES 
+</code></pre>
+</div>
+
+<h3 id="git-ignore-all-ds_store-files">Git Ignore all .DS_Store files</h3>
+
+<p>Rather than creating an individual .gitignore file for each of your git projects to ignore .DS_Store files, you may simply ignore them globally using this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git config --global core.excludesfile ~/.gitignore
+echo .DS_Store &gt;&gt; ~/.gitignore 
+</code></pre>
+</div>
+
+<h3 id="dim-icons-of-hidden-applications-in-the-dock">Dim Icons of Hidden Applications in the Dock</h3>
+
+<p>This will have the dock indicate which applications you have hidden by dimming and making transparent icons in the dock:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>defaults write com.apple.Dock showhidden -bool YES
+killall Dock 
+</code></pre>
+</div>
+
+<h3 id="hide-desktop-items">Hide Desktop Items</h3>
+
+<p>This will hide all icons and items on your desktop. If you’re one of those people who prefers a clean desktop and uses Finder windows exclusively for file management, then give this a go:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>defaults write com.apple.finder CreateDesktop -bool false 
+</code></pre>
+</div>
+
+<h3 id="sync-files-in-any-location-with-dropbox">Sync Files in Any Location with Dropbox</h3>
+
+<s>This uses symbolic linking (sort of like an alias or shortcut) to get Dropbox to sync folders and items that are not actually in your Dropbox folder.</s>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>ln -s /Users/you/path-to-file-or-folder /Users/you/Dropbox 
+</code></pre>
+</div>
+
+<p>Be sure to change the “you” to your username and the latter path if you chose a custom Dropbox folder location.</p>
+
+<p><strong>Edit:</strong> As Egypt Urnash points out in the comments, Dropbox will follow normal Mac aliases. There is no need to create symbolic links.</p>
+
+<h3 id="disable-crash-dialogs">Disable Crash Dialogs</h3>
+
+<p>This will stop the little dialog windows that appear everytime an application crashes or you force quit an app:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>defaults write com.apple.CrashReporter DialogType none 
+</code></pre>
+</div>
+
+<h3 id="delete-archives-after-extracting">Delete Archives after Extracting</h3>
+
+<p>Open <code class="highlighter-rouge">/System/Library/CoreServices/Archive Utility.app</code>, go to Preferences, and choose to delete archives after extracting or expanding them.</p>
+
+<p><img src="../../assets/uploads/2012/08/Screen-Shot-2012-08-26-at-1.29.40-PM-e1345959461888.jpg" alt="" /></p>
+
+<h3 id="skip-disk-image-verification">Skip Disk Image Verification</h3>
+
+<p>If you install new software often or mount disk images often, you can save some time by skipping the image verification process by running this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>defaults write com.apple.frameworks.diskimages skip-verify TRUE 
+</code></pre>
+</div>
+
+<h3 id="disable-window-shadows-in-screenshots">Disable Window Shadows in Screenshots</h3>
+
+<p>The drop shadows of windows makes screenshots larger than they need to be. Run this to not include them in screenshots:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>defaults write com.apple.screencapture disable-shadow -bool true
+killall SystemUIServer 
+</code></pre>
+</div>
+
+<h2 id="reverting-back-to-default">Reverting Back to Default</h2>
+
+<p>To undo most of these changes, replace “defaults write” with “defaults delete” to revert to the default setting. Alternatively, simply replace “true” with “false”, “0″ with “1″, or “yes” with “no” and vice versa.</p>
+
+</div></div><hr><div class="post-footer"><div id="comments"><h3>Comments</h3> <div id="disqus_thread"></div><script type="text/javascript">var disqus_shortname="christophersu";!function(){var e=document.createElement("script");e.type="text/javascript",e.async=!0,e.src="//"+disqus_shortname+".disqus.com/embed.js",(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(e)}();</script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></div><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script><div class="footer"><p class="copyright">&copy; 2012-2017 Christopher Su. All rights reserved.</p></div></div><script>!function(e,a,t,n,c,o,s){e.GoogleAnalyticsObject=c,e[c]=e[c]||function(){(e[c].q=e[c].q||[]).push(arguments)},e[c].l=1*new Date,o=a.createElement(t),s=a.getElementsByTagName(t)[0],o.async=1,o.src=n,s.parentNode.insertBefore(o,s)}(window,document,"script","../../../www.google-analytics.com/analytics.js","ga"),ga("create","UA-34248999-1","auto"),ga("send","pageview");</script> </body>
+<!-- Mirrored from christopher.su/2012/system-tweaks-mac-experience/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 02 Aug 2017 17:07:19 GMT -->
+</html>

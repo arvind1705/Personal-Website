@@ -1,0 +1,1830 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Christopher Su</title>
+ <link href="http://christopher.su/atom.xml" rel="self"/>
+ <link href="http://christopher.su/"/>
+ <updated>2017-07-28T05:26:02+00:00</updated>
+ <id>http://christopher.su</id>
+ <author>
+   <name>Christopher Su</name>
+   <email>hello@christopher.su</email>
+ </author>
+
+ 
+ <entry>
+   <title>Installing Koken on EC2</title>
+   <link href="http://christopher.su//2016/install-koken-ec2/"/>
+   <updated>2016-01-13T00:00:00+00:00</updated>
+   <id>http://christopher.su/2016/install-koken-ec2</id>
+   <content type="html">&lt;p&gt;Here’s how to quickly get Koken installed on Amazon EC2:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Go to the AWS website and log in.&lt;/li&gt;
+  &lt;li&gt;Create a new &lt;code class=&quot;highlighter-rouge&quot;&gt;t2.micro&lt;/code&gt; (or whatever the current free tier instance size is) instance.&lt;/li&gt;
+  &lt;li&gt;Select the Amazon Machine Image (AMI) when asked.&lt;/li&gt;
+  &lt;li&gt;Create a new key if you don’t have one already, when prompted. Keep the file that is downloaded for you.&lt;/li&gt;
+  &lt;li&gt;When creating a security group, be sure to add a rule to allow HTTP access from everywhere.&lt;/li&gt;
+  &lt;li&gt;After creating your instance, note it’s public address and open up a shell.&lt;/li&gt;
+  &lt;li&gt;Find your key file and run &lt;code class=&quot;highlighter-rouge&quot;&gt;chmod 600 &amp;lt;key-name&amp;gt;.pem&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;ssh -i &amp;lt;key-name&amp;gt;.pem ec2-user@&amp;lt;ec2-instance-public-address&amp;gt;&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Run the following commands on your EC2 instance:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo yum update -y
+sudo yum install -y docker
+sudo service docker start
+sudo usermod -a -G docker ec2-user
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Type &lt;code class=&quot;highlighter-rouge&quot;&gt;exit&lt;/code&gt; and then run step 8 again.&lt;/li&gt;
+  &lt;li&gt;Run the following:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wget -qO - https://gist.githubusercontent.com/bradleyboy/48b67b5e9ebf91031a19/raw/create_koken.sh | sudo bash
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Done! You should now be able to open your EC2 instance’s public address in a web browser to complete the installation process.&lt;/li&gt;
+  &lt;li&gt;(Optional) To use your own domain or subdomain, create a CNAME record on your DNS records to point to the EC2 instance’s public address.&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Making Progress</title>
+   <link href="http://christopher.su//2016/making-progress/"/>
+   <updated>2016-01-05T00:00:00+00:00</updated>
+   <id>http://christopher.su/2016/making-progress</id>
+   <content type="html">&lt;p&gt;It’s a new year and I’ve got several New Year’s resolutions I will be attempting to fulfill. I’ve created a new project called &lt;a href=&quot;https://github.com/csu/progress&quot;&gt;Progress&lt;/a&gt; to help maintain weekly snippets to track progress on goals and tasks. If you’ve ever worked at Google or another company that uses a &lt;a href=&quot;http://blog.idonethis.com/google-snippets-internal-tool/&quot; ref=&quot;nofollow&quot;&gt;similar practice&lt;/a&gt; &lt;a href=&quot;http://blog.idonethis.com/silicon-valleys-productivity-secret/&quot; ref=&quot;nofollow&quot;&gt;for tracking&lt;/a&gt; &lt;a href=&quot;http://blog.idonethis.com/why-google-snippets/&quot; ref=&quot;nofollow&quot;&gt;individual work&lt;/a&gt;, this might sound familiar.&lt;/p&gt;
+
+&lt;h2 id=&quot;features&quot;&gt;Features&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Web interface for viewing and editing snippets&lt;/li&gt;
+  &lt;li&gt;Stores data as flat files&lt;/li&gt;
+  &lt;li&gt;Renders Markdown&lt;/li&gt;
+  &lt;li&gt;(Optional) Page in web interface to remind self of goals&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;screenshots&quot;&gt;Screenshots&lt;/h2&gt;
+&lt;p&gt;This is what a weekly snippet looks like in Progress:
+&lt;img src=&quot;/assets/uploads/2016/progress/snippet.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This is how snippets are stored on the file system (the date following the week number is the first day of the week):
+&lt;img src=&quot;/assets/uploads/2016/progress/filesystem.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This is what the (extremely simple) editor looks like (you can, of course, just edit the files in another text editor and just use Progress to render and view your snippets):
+&lt;img src=&quot;/assets/uploads/2016/progress/editor.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;installation&quot;&gt;Installation&lt;/h2&gt;
+&lt;p&gt;Find the download and installation instructions &lt;a href=&quot;https://github.com/csu/progress&quot;&gt;on GitHub&lt;/a&gt;! As usual, feel free to open any issues or pull requests on the repo for any bugs, feature requests, etc.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Set up Wildcard Email Forwarding on a Custom Domain</title>
+   <link href="http://christopher.su//2015/wildcard-email-forwarding/"/>
+   <updated>2015-11-11T00:00:00+00:00</updated>
+   <id>http://christopher.su/2015/wildcard-email-forwarding</id>
+   <content type="html">&lt;p&gt;This post will explain how to set up wildcard (also known as catch-all) email forwarding on a custom domain. This will allow you to have all emails sent to &lt;code class=&quot;highlighter-rouge&quot;&gt;*@your.domain&lt;/code&gt; forwarded to another address. We will be using &lt;a href=&quot;http://mailgun.com/&quot; rel=&quot;nofollow&quot;&gt;Mailgun&lt;/a&gt;, which will allow you to have 5,000 emails forwarded each month for free.&lt;/p&gt;
+
+&lt;h3 id=&quot;instructions&quot;&gt;Instructions&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;Sign up for an account at Mailgun.&lt;/li&gt;
+  &lt;li&gt;Go to the Domains section and click the “Add New Domain” button.&lt;/li&gt;
+  &lt;li&gt;Follow the instructions to add and verify your domain name. Update your DNS records according to the instructions.&lt;/li&gt;
+  &lt;li&gt;Go to the Routes section of the management area once your domain is verified.&lt;/li&gt;
+  &lt;li&gt;Click the “Create New Rule” button.&lt;/li&gt;
+  &lt;li&gt;For the filter expression, enter &lt;code class=&quot;highlighter-rouge&quot;&gt;catch_all()&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;For the actions, enter &lt;code class=&quot;highlighter-rouge&quot;&gt;forward(&quot;your@email.here&quot;)&lt;/code&gt;. The form should look something like this when you’re done:&lt;br /&gt;
+&lt;img src=&quot;/assets/uploads/2015/11/mailgun/1.jpg&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;Save the rule. You’re done!&lt;/li&gt;
+  &lt;li&gt;Test sending an email to &lt;code class=&quot;highlighter-rouge&quot;&gt;anything@your.domain&lt;/code&gt; and make sure it forwards properly. You may need to wait an hour or two for the DNS records to propagate.&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Setting up a Text Message Announcement System</title>
+   <link href="http://christopher.su//2015/text-announcements/"/>
+   <updated>2015-10-22T00:00:00+00:00</updated>
+   <id>http://christopher.su/2015/text-announcements</id>
+   <content type="html">&lt;p&gt;At this year’s &lt;a href=&quot;http://15f.dubhacks.co/&quot; rel=&quot;nofollow&quot;&gt;DubHacks&lt;/a&gt;, we used a text announcement system to send important information to over 700+ attendees, mentors, and sponsors throughout the hackathon. As attendees were working in separate classrooms spread across multiple buildings, the mass-SMS system was particularly effective in notifying everyone of upcoming events. This post explains how to quickly setup and use Batch SMS, the open source project I developed to send large amounts of text announcements.&lt;/p&gt;
+
+&lt;h2 id=&quot;sections&quot;&gt;Sections&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;#overview&quot;&gt;Design Overview&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#installation&quot;&gt;Installation&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#basic-usage&quot;&gt;Basic Usage&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#normalizing-numbers&quot;&gt;Normalizing Numbers&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#unsubscribing&quot;&gt;Unsubscribing&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#incoming-messages&quot;&gt;Incoming Messages&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#conclusion&quot;&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;design-overview&quot;&gt;&lt;a name=&quot;overview&quot;&gt;&lt;/a&gt;Design Overview&lt;/h2&gt;
+&lt;p&gt;The code for Batch SMS can be found on GitHub at &lt;a href=&quot;https://github.com/csu/batch_sms&quot;&gt;csu/batch_sms&lt;/a&gt;. It is written in Python and uses the &lt;a href=&quot;http://twilio.com/&quot; rel=&quot;nofollow&quot;&gt;Twilio&lt;/a&gt; API for sending text messages (but it is written in a way such that Twilio could easily be swapped out for an equivalent service).&lt;/p&gt;
+
+&lt;p&gt;Twilio &lt;em&gt;rate limits message sending to one text per second&lt;/em&gt; per phone number, so the system is also capable of load balancing a text across multiple “from” numbers (the numbers you own, from which the texts are being sent).&lt;/p&gt;
+
+&lt;p&gt;While we do want to distribute the texts across multiple “from” numbers, we still want each receiving number to always receive texts from the same sending number. Thus, the system maintains associations between “from” numbers and “to” numbers and persists them in a database. Any database supported by &lt;a href=&quot;http://www.sqlalchemy.org/&quot;&gt;SQLAlchemy&lt;/a&gt; can be used with the system (this includes SQLite, MySQL, PostgreSQL, and MariaDB).&lt;/p&gt;
+
+&lt;h2 id=&quot;installation&quot;&gt;&lt;a name=&quot;installation&quot;&gt;&lt;/a&gt;Installation&lt;/h2&gt;
+&lt;p&gt;First, install all necessary requirements:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Python 2&lt;/li&gt;
+  &lt;li&gt;pip (for installing Python dependencies)&lt;/li&gt;
+  &lt;li&gt;A SQLAlchemy-compatible database (SQLite is sufficient)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Now, get the code by cloning the git repository:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/csu/batch_sms.git
+&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;batch_sms
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Install the necessary Python dependencies (optionally, enter a Python virtual environment before doing this):&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pip install -r requirements.txt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now you’re good to go!&lt;/p&gt;
+
+&lt;h2 id=&quot;basic-usage&quot;&gt;&lt;a name=&quot;basic-usage&quot;&gt;&lt;/a&gt;Basic Usage&lt;/h2&gt;
+&lt;p&gt;Create a new Python script or enter the interactive Python REPL. Now enter the following:&lt;/p&gt;
+
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;batch_sms&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BatchSMS&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;batch_sms&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AssociatedBatchSender&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;batch_sms&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TwilioSender&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;secrets&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TWILIO_ACCOUNT_SID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TWILIO_AUTH_TOKEN&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;sender&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TwilioSender&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TWILIO_ACCOUNT_SID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TWILIO_AUTH_TOKEN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;batch_sender&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AssociatedBatchSender&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sender&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BatchSMS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'test.db'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;batch_sender&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;auto_associate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Here’s what this does:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The first few lines &lt;code class=&quot;highlighter-rouge&quot;&gt;import&lt;/code&gt; what we need from the Batch SMS module.&lt;/li&gt;
+  &lt;li&gt;We then create a &lt;code class=&quot;highlighter-rouge&quot;&gt;TwilioSender&lt;/code&gt;, which knows how to send messages using Twilio.&lt;/li&gt;
+  &lt;li&gt;We then create an &lt;code class=&quot;highlighter-rouge&quot;&gt;AssociatedBatchSender&lt;/code&gt;, which knows how to send large numbers of messages while obeying to-from number relationships (we pass it the &lt;code class=&quot;highlighter-rouge&quot;&gt;TwilioSender&lt;/code&gt;, which it will use for the actual message sending).&lt;/li&gt;
+  &lt;li&gt;The components are separated in this way so you could swap out the &lt;code class=&quot;highlighter-rouge&quot;&gt;TwilioSender&lt;/code&gt; for another object that implements the same interface (e.g. if you wanted to use another API besides Twilio to do the actual SMS sending).&lt;/li&gt;
+  &lt;li&gt;Finally, we create a &lt;code class=&quot;highlighter-rouge&quot;&gt;BatchSMS&lt;/code&gt; object which will manage data persistence.&lt;/li&gt;
+  &lt;li&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;auto_associate&lt;/code&gt; option will automatically associate newly added “to” numbers with “from” numbers. It attempts to distribute “to” numbers as evenly as possible across “from” numbers.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Now, we can create a “subscription list” which consists of a list of recipients. Give it a name, like &lt;code class=&quot;highlighter-rouge&quot;&gt;Hackers&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;sub_id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;create_subscription_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Hackers'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Add your “from” numbers from which you will send messages:&lt;/p&gt;
+
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_from_number&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'+15005550006'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now add your “to” numbers and include them in the subscription list you just created:&lt;/p&gt;
+
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_to_number&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'+15005550010'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;subs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sub_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_to_number&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'+15005550011'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;subs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sub_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_to_number&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'+15005550012'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;subs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sub_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_to_number&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'+15005550013'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;subs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sub_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;We can now send a message to all recipients in the “Hackers” subscription list like so:&lt;/p&gt;
+
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;send_to_subscription&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sub_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Hello World'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;If you want some feedback printed to &lt;code class=&quot;highlighter-rouge&quot;&gt;stdout&lt;/code&gt; (or want to do anything after the messages are sent), you can pass in a callback:&lt;/p&gt;
+
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;callback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;payload&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;payload&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;send_to_subscription&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sub_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Hello World'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;callback&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;callback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;normalizing-numbers&quot;&gt;&lt;a name=&quot;normalizing-numbers&quot;&gt;&lt;/a&gt;Normalizing Numbers&lt;/h2&gt;
+&lt;p&gt;Depending on how you’re collecting phone numbers from recipients, you may end up with phone numbers in all different formats or numbers that are entirely invalid. I wrote &lt;a href=&quot;https://github.com/csu/batch_sms/blob/master/scripts/normalize_numbers.py&quot;&gt;a simple Python script&lt;/a&gt; that normalizes numbers from a &lt;code class=&quot;highlighter-rouge&quot;&gt;csv&lt;/code&gt; file into the &lt;code class=&quot;highlighter-rouge&quot;&gt;+1XXXYYYZZZZ&lt;/code&gt; format that Twilio likes while discarding invalid phone numbers (e.g. ones of improper length).&lt;/p&gt;
+
+&lt;h2 id=&quot;unsubscribing&quot;&gt;&lt;a name=&quot;unsubscribing&quot;&gt;&lt;/a&gt;Unsubscribing&lt;/h2&gt;
+&lt;p&gt;Conveniently, Twilio already handles unsubscribing/opt-out and resubscribing for us. Users can text STOP, UNSUBSCRIBE, and other commands to opt-out of notifications. Users can text START and YES to resubscribe. For the full list of commands included by Twilio, see &lt;a href=&quot;https://www.twilio.com/help/faq/sms/does-twilio-support-stop-block-and-cancel-aka-sms-filtering&quot;&gt;their article on the topic&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;incoming-messages&quot;&gt;&lt;a name=&quot;incoming-messages&quot;&gt;&lt;/a&gt;Incoming Messages&lt;/h2&gt;
+&lt;p&gt;By default, Twilio will not do anything with incoming messages and will reply to them with a message telling you to setup your incoming message handler. I quickly threw together &lt;a href=&quot;https://github.com/csu/batch_sms/blob/master/scripts/incoming.php&quot;&gt;this short PHP script&lt;/a&gt; that will receive incoming messages, forward them to another number (e.g. my phone), and then reply to the sender of the message with a generic response (e.g. “email the DubHacks team with questions”).&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;&lt;a name=&quot;conclusion&quot;&gt;&lt;/a&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;All in all, the system was very effective at DubHacks. It took around one minute to send out 700+ text messages load balanced across five sending numbers. The success rate for message sends was high and it felt great being able to hit enter on my keyboard and seeing hundreds of people appear at an activity or event shortly after.&lt;/p&gt;
+
+&lt;p&gt;I wrote this whole thing in one go. If you find any typos or errors, please &lt;a href=&quot;/contact/&quot;&gt;contact me&lt;/a&gt;. Feel free to message me with any questions or concerns.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Gollum Tricks</title>
+   <link href="http://christopher.su//2015/gollum-tricks/"/>
+   <updated>2015-08-23T00:00:00+00:00</updated>
+   <id>http://christopher.su/2015/gollum-tricks</id>
+   <content type="html">&lt;p&gt;I recently started using &lt;a rel=&quot;nofollow&quot; href=&quot;https://github.com/gollum/gollum&quot;&gt;Gollum&lt;/a&gt; again for note-taking and figured I’d share some of the customizations I’m using with setup.&lt;/p&gt;
+
+&lt;h2 id=&quot;generate-a-list-of-all-pages&quot;&gt;Generate a List of All Pages&lt;/h2&gt;
+&lt;p&gt;The last time I used Gollum, I manually maintained a table of contents for my entire wiki on my &lt;code class=&quot;highlighter-rouge&quot;&gt;Home&lt;/code&gt; page. It turns out, since then, a macro has been created to generate this automatically. You can use this snippet in any file and a list of all the files in your wiki will be rendered in its place:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;&amp;lt;GlobalTOC()&amp;gt;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;If you want to customize this, you can take a look at &lt;a href=&quot;https://github.com/gollum/gollum-lib/blob/master/lib/gollum-lib/macro/global_toc.rb&quot;&gt;the macro implementation&lt;/a&gt; and modify it as necessary.&lt;/p&gt;
+
+&lt;h2 id=&quot;add-table-of-contents-to-every-page&quot;&gt;Add Table of Contents to Every Page&lt;/h2&gt;
+&lt;p&gt;Instead of manually adding the &lt;code class=&quot;highlighter-rouge&quot;&gt;[[_TOC_]]&lt;/code&gt; tag to the top of every page, you can have the table of contents for a page automatically added to the top or sidebar of every page by creating a file named &lt;code class=&quot;highlighter-rouge&quot;&gt;_Header.md&lt;/code&gt; (or other file extension) or &lt;code class=&quot;highlighter-rouge&quot;&gt;_Sidebar.md&lt;/code&gt; (if you want the table of contents as a sidebar) and add &lt;code class=&quot;highlighter-rouge&quot;&gt;[[_TOC_]]&lt;/code&gt; to it. Commit the new file to git, refresh the page, and you should have table of contents on every page.&lt;/p&gt;
+
+&lt;h2 id=&quot;http-basic-authentication&quot;&gt;HTTP Basic Authentication&lt;/h2&gt;
+&lt;p&gt;There’s &lt;a href=&quot;https://gist.github.com/troelskn/2224709&quot;&gt;a gist&lt;/a&gt; that adds HTTP basic auth to Gollum. Note that this requires you to run Gollum with Rack. Alternatively, you could put Gollum behind nginx or Apache and add authentication there.&lt;/p&gt;
+
+&lt;h2 id=&quot;custom-css-and-javascript&quot;&gt;Custom CSS and JavaScript&lt;/h2&gt;
+&lt;p&gt;This is a pretty well known and well documented feature, but you can create &lt;code class=&quot;highlighter-rouge&quot;&gt;custom.css&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;custom.js&lt;/code&gt; in your repository root and launch Gollum with the &lt;code class=&quot;highlighter-rouge&quot;&gt;--css&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;--js&lt;/code&gt; flags respectively and have custom CSS/JS injected into every page of your wiki.&lt;/p&gt;
+
+&lt;h2 id=&quot;fix-list-margins&quot;&gt;Fix List Margins&lt;/h2&gt;
+&lt;p&gt;For some reason, the default styles for Gollum put huge margins before and after lists. This CSS fixes that and makes them look more normal:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.markdown-body ul, .markdown-body ol {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Installing Selenium and ChromeDriver on Ubuntu</title>
+   <link href="http://christopher.su//2015/selenium-chromedriver-ubuntu/"/>
+   <updated>2015-05-29T00:00:00+00:00</updated>
+   <id>http://christopher.su/2015/selenium-chromedriver-ubuntu</id>
+   <content type="html">&lt;p&gt;I recently got Selenium, Google Chrome, and ChromeDriver installed and working on a &lt;a href=&quot;https://www.digitalocean.com/?refcode=47eb57bb618f&quot;&gt;DigitalOcean&lt;/a&gt; instance running 64-bit Ubuntu 14.04. Here’s how:&lt;/p&gt;
+
+&lt;p&gt;First, install Google Chrome for Debian/Ubuntu:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get install libxss1 libappindicator1 libindicator7
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+sudo dpkg -i google-chrome&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;.deb
+sudo apt-get install -f
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now, let’s install &lt;code class=&quot;highlighter-rouge&quot;&gt;xvfb&lt;/code&gt; so we can run Chrome headlessly:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get install xvfb
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Install ChromeDriver:&lt;sup&gt;&lt;a class=&quot;footnote-link&quot; href=&quot;#selenium-version&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get install unzip
+
+wget -N http://chromedriver.storage.googleapis.com/2.26/chromedriver_linux64.zip
+unzip chromedriver_linux64.zip
+chmod +x chromedriver
+
+sudo mv -f chromedriver /usr/local/share/chromedriver
+sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
+sudo ln -s /usr/local/share/chromedriver /usr/bin/chromedriver
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Install some Python dependencies and Selenium:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Install pip:&lt;/span&gt;
+sudo apt-get install python-pip
+
+&lt;span class=&quot;c&quot;&gt;## (Optional) Create and enter a virtual environment:&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# sudo apt-get install python-virtualenv&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# virtualenv env&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# source env/bin/activate&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# Install Selenium and pyvirtualdisplay:&lt;/span&gt;
+pip install pyvirtualdisplay selenium
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now, we can do stuff like this with Selenium in Python:&lt;/p&gt;
+
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pyvirtualdisplay&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Display&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;selenium&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;display&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;visible&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;800&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;600&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'http://christopher.su'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;footnotes&quot;&gt;Footnotes&lt;/h3&gt;
+&lt;p&gt;&lt;a class=&quot;footnote-anchor&quot; name=&quot;selenium-version&quot;&gt;1&lt;/a&gt;: You can find all the ChromeDriver releases &lt;a href=&quot;http://chromedriver.storage.googleapis.com/&quot; rel=&quot;nofollow&quot;&gt;here&lt;/a&gt;. If you’re using a 32-bit system or a non-Linux OS, the ChromeDriver download used above won’t work.&lt;br /&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Code Every Day</title>
+   <link href="http://christopher.su//2014/code-every-day/"/>
+   <updated>2014-04-14T00:00:00+00:00</updated>
+   <id>http://christopher.su/2014/code-every-day</id>
+   <content type="html">&lt;p&gt;Inspired by &lt;a href=&quot;http://ejohn.org/blog/write-code-every-day/&quot;&gt;John Resig&lt;/a&gt; (who was, in turn, inspired by &lt;a href=&quot;http://jenniferdewalt.com/&quot;&gt;Jennifer Dewalt&lt;/a&gt;), I am going to write code every day, starting today. I hope to write about my coding progress regularly on this blog.&lt;/p&gt;
+
+&lt;h3 id=&quot;why-i-intend-on-writing-as-i-go-along&quot;&gt;Why I intend on writing as I go along&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Obligate myself to actually code every day (though this may not work because this blog has practically no readership)&lt;/li&gt;
+  &lt;li&gt;Keep a log of my progress over time&lt;/li&gt;
+  &lt;li&gt;Recall the reasoning I used when justifying decisions (e.g. this list describes why I decided to blog while doing this)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;what-i-hope-to-gain-from-this&quot;&gt;What I hope to gain from this&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Better programming skills and intuition. Improved familiarity with tools, paradigms, etc.&lt;/li&gt;
+  &lt;li&gt;Learn new frameworks, languages, etc. by application rather than just reading docs&lt;/li&gt;
+  &lt;li&gt;Improve ability to create habits. Build willpower.&lt;/li&gt;
+  &lt;li&gt;Create some interesting projects, hopefully some worth mentioning in a technical interview or something (for those “describe a time you ran into a problem when programming and how you fixed your problem”-type questions)&lt;/li&gt;
+  &lt;li&gt;Spend my free time more productively (as of now, coding seems like a much more useful way of spending my free time than playing video games or watching Netflix. I have also heard that, after programming reguarly and a lot, one comes to realize that not all coding is useful and there are better ways to spend time than coding without a clear, predefined outline/action plan)&lt;/li&gt;
+  &lt;li&gt;Meet people, become more familiar with the many programming communities on the Internet.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;ideas-for-what-to-do-each-day&quot;&gt;Ideas for what to do each day&lt;/h3&gt;
+&lt;p&gt;This section is more of just a brainstorm/dump of different ways I can code each day.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Learn a new language or framework. On my to-learn list: Haskell, Scala, R, (possibly) D, express (and other web JavaScript frameworks), Fortran (for class)&lt;/li&gt;
+  &lt;li&gt;Write code demonstrating topics taught in class (while I’m not currently taking any computer science courses, I am taking &lt;a href=&quot;https://www.coursera.org/course/scicomp&quot;&gt;High Performance Scientific Computing&lt;/a&gt; (available on Coursera), which I can write code for)&lt;/li&gt;
+  &lt;li&gt;Play with APIs and write tools for myself and others&lt;/li&gt;
+  &lt;li&gt;Collaborate with others on projects&lt;/li&gt;
+  &lt;li&gt;Contribute to open source projects&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>WordPress, Ghost, or Jekyll?</title>
+   <link href="http://christopher.su//2014/wordpress-ghost-jekyll/"/>
+   <updated>2014-03-20T00:00:00+00:00</updated>
+   <id>http://christopher.su/2014/wordpress-ghost-jekyll</id>
+   <content type="html">&lt;p&gt;I spent this afternoon moving my websites from a shared host to a LAMP stack on a &lt;a href=&quot;https://www.digitalocean.com/?refcode=47eb57bb618f&quot;&gt;DigitalOcean VPS&lt;/a&gt; (ref. link). In the process, I had to decide whether I wanted to stick with WordPress or move to a platform with a more simple writing experience, like Ghost or Jekyll. As of now, I’m running both WordPress and Ghost side by side. My main problem with WordPress was that each post felt like an article. It depersonalized my blog and made it more of a collection articles rather than a place for me to express my opinions and thoughts. My hope is that, with Ghost, I’ll be able to find the midpoint between an entirely personal blog (essentially a public journal) and an entirely expository blog.&lt;/p&gt;
+
+&lt;p&gt;I chose Ghost over Jekyll because I wanted to minimize the amount of work spent on the blog outside of writing actual content. Another one of the reasons WordPress became such an annoyance was the complexity of its theme and plugin systems and the amount of maintence that was necessary to keep them up and running. I was writing child themes, page templates, and custom plugins and it all became too overwhelming and complicated. With Ghost, all of the settings fit neatly into one config file and one page of settings. While I like the idea of writing my posts in Markdown files and storing them in a flat-file database, the work involved in setting Jekyll up and writing YAML front matter for posts deterred me from using it in production.&lt;/p&gt;
+
+&lt;p&gt;Anyways, I guess the point is I chose Ghost because it offers the most minimal and simplistic experience of the three and hopefully that will encourage me to write more.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Tracking and Analyzing Website Traffic with Google Analytics</title>
+   <link href="http://christopher.su//2014/tracking-analyzing-website-traffic-google-analytics/"/>
+   <updated>2014-01-25T00:00:00+00:00</updated>
+   <id>http://christopher.su/2014/tracking-analyzing-website-traffic-google-analytics</id>
+   <content type="html">&lt;p&gt;Tracking visitors on your NHD website isn’t terribly useful, but it’s fun and can sometimes provide some helpful information (e.g. when judges might be looking at your website). Here’s how to add Google Analytics to your website:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Register for a &lt;a href=&quot;https://www.google.com/analytics/&quot;&gt;Google Analytics&lt;/a&gt; account. If it asks you to choose between Universal Analytics and Classic Analytics, choose either. It doesn’t matter for our purposes.&lt;/li&gt;
+  &lt;li&gt;Put your website title and URL where it is requested and click “Get Tracking ID”.&lt;/li&gt;
+  &lt;li&gt;Go to the Weebly editor, &lt;a href=&quot;/2014/create-custom-weebly-theme/&quot; title=&quot;Create a Custom Weebly Theme&quot;&gt;make a custom theme&lt;/a&gt; (if you haven’t already), and open the HTML/CSS theme editor.&lt;/li&gt;
+  &lt;li&gt;Open the primary HTML file (usually index.html) and find the &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;/head&amp;gt;&lt;/code&gt; tag. Right before the &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;/head&amp;gt;&lt;/code&gt; tag, paste in the code that Google Analytics gave you.
+&lt;br /&gt;
+That’s it. Now, wait a day or two for some statistics to show up and you can go to Google Analytics to view everything from bounce rates to referral sources.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Here are some clever uses for Google Analytics in NHD:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;The “behavior flow” page shows which pages people land on and which pages people tend to go to from certain pages. For instance, on &lt;em&gt;The Disease of Hope: Mao’s Great Famine&lt;/em&gt;, most people who started at the front page went to the context page next. You can use this information to change or add buttons, portals, etc. to help guide visitors along the optimal path of viewing the website.&lt;/li&gt;
+  &lt;li&gt;Site speed is also a useful page. It’s not great to have a slow loading website. Another useful resource for speeding up your website is Google Webmaster Tools.&lt;/li&gt;
+  &lt;li&gt;I find the geography page to be interesting. The states that visit our winning website the most are also the ones that seem to win a lot at the national competition (though they also have larger populations).&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/uploads/Screen-Shot-2014-01-25-at-2.57.07-PM.jpg&quot;&gt;&lt;img class=&quot;alignnone size-large wp-image-890&quot; alt=&quot;Screen Shot 2014-01-25 at 2.57.07 PM&quot; src=&quot;/assets/uploads/Screen-Shot-2014-01-25-at-2.57.07-PM-1024x539.jpg&quot; width=&quot;625&quot; height=&quot;328&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Mao&#8217;s Great Famine: Quick Reference Bar</title>
+   <link href="http://christopher.su//2014/maos-great-famine-quick-reference-bar/"/>
+   <updated>2014-01-25T00:00:00+00:00</updated>
+   <id>http://christopher.su/2014/maos-great-famine-quick-reference-bar</id>
+   <content type="html">&lt;p&gt;I get asked very often how the quick reference bar for &lt;i&gt;The Disease of Hope: Mao&amp;#8217;s Great Famine&lt;/i&gt; was made. The quick reference bar is simply a HTML unordered list (ul) element that is styled with pure CSS to produce a &amp;#8220;drop-up&amp;#8221; menu effect upon hover.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;#8217;s how to go about creating one. First, &lt;a href=&quot;/2014/create-custom-weebly-theme/&quot; title=&quot;Create a Custom Weebly Theme&quot;&gt;create a custom theme&lt;/a&gt; and open the HTML/CSS editor in Weebly. Open the primary HTML file and scroll down to the footer area. Now add an HTML unordered list like so (if you don&amp;#8217;t know HTML, try reading some of the resources available on HTML/CSS listed on &lt;a href=&quot;/national-history-day-website-resources/&quot; title=&quot;National History Day Website Resources&quot;&gt;the resources page&lt;/a&gt;): &lt;br /&gt;
+&lt;code&gt;&amp;lt;ul&amp;amp;gt
+&amp;lt;li&amp;amp;gt
+&amp;lt;a&amp;amp;gt
+&amp;lt;div&amp;amp;gt
+&amp;lt;h2&amp;amp;gt
+&amp;lt;p&amp;amp;gt
+&amp;lt;/div&amp;amp;gt
+&amp;lt;/li&amp;amp;gt
+&amp;lt;/ul&amp;amp;gt
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;There are many ways you could structure this (using &lt;code&gt;div'&lt;/code&gt;s and &lt;code&gt;id'&lt;/code&gt;s), but this is how I did mine. After this, assign id&amp;#8217;s to pretty much everything, so you can style them with CSS. First write CSS to build the footer itself, hiding the div in the li (so only the a element is showing). In other words, use CSS to make a horizontal navigation menu that anchors to the bottom of the page. If you don&amp;#8217;t know how to write the CSS for this, look at any Weebly theme&amp;#8217;s HTML/CSS for the navigation menu at the top of the page to get an idea (it&amp;#8217;s also an unordered list full of list elements that are styled to be displayed horizontally with dropdowns). Now add CSS to make the div elements inside the list elements appear upon hover (once again, Weebly themes can be used as reference, as their navigation menus also have dropdowns). The easiest way to make this work is to add CSS styling for the &amp;#8220;hover&amp;#8221; action of the HTML elements and modify the &amp;#8220;display&amp;#8221; attribute upon hovering (ex. from display:none to display:block, or something like that).&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Uploading Files to Weebly Without Using a File Element</title>
+   <link href="http://christopher.su//2014/uploading-files-weebly-file-element/"/>
+   <updated>2014-01-24T00:00:00+00:00</updated>
+   <id>http://christopher.su/2014/uploading-files-weebly-file-element</id>
+   <content type="html">&lt;p&gt;Let’s say you want to upload a document, video, or HTML file to be embedded in your website, but you don’t want the user to be able to download the file or see a file download element for it. You can upload files through the custom theme editor and they will be considered as part of your website’s “theme”. They can then be accessed via permalinks. To do so, go to the Design tab and press “Edit HTML/CSS”. Then in the sidebar, select “Add new file(s)” and upload your files.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/uploads/Screen-Shot-2014-01-23-at-1.49.00-PM.jpg&quot;&gt;&lt;img class=&quot;alignnone size-large wp-image-881&quot; alt=&quot;Screen Shot 2014-01-23 at 1.49.00 PM&quot; src=&quot;/assets/uploads/Screen-Shot-2014-01-23-at-1.49.00-PM-1024x226.jpg&quot; width=&quot;625&quot; height=&quot;137&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Now, to access your files, simply use the permalink: &lt;code class=&quot;highlighter-rouge&quot;&gt;http://18069595.weebly.com/files/theme/yourfilename.here&lt;/code&gt;&lt;/p&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Recording Interview Audio and Video</title>
+   <link href="http://christopher.su//2014/recording-interview-audio-video/"/>
+   <updated>2014-01-24T00:00:00+00:00</updated>
+   <id>http://christopher.su/2014/recording-interview-audio-video</id>
+   <content type="html">&lt;p&gt;If you take anything away from this guide, it should be: &lt;strong&gt;have backups for all your equipment and backups for your backups.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;have-backups-of-all-your-equipment&quot;&gt;Have Backups of All Your Equipment&lt;/h2&gt;
+
+&lt;p&gt;When working on &lt;em&gt;The Marshall Mission: Negotiating a Unified China&lt;/em&gt;, one of our cameras failed during our most important interview. Thankfully, we were running two cameras the entire time. We were filming with both a Canon 550D and a Nikon D7000. The Nikon D7000 overheated and stopped recording about twenty minutes into the interview. The Canon 550D continued chugging along and got it all. You never want to stop or pause an interview for technical problems. You never want to miss important parts of an interview because of technical problems. Have backups for all your equipment incase it fails: SD/CF cards, batteries, the cameras themselves, anything you can possibly think of.&lt;/p&gt;
+
+&lt;h2 id=&quot;import-recordings-immediately-and-back-them-up&quot;&gt;Import Recordings Immediately and Back Them Up&lt;/h2&gt;
+
+&lt;p&gt;After conducting one of our interviews for &lt;em&gt;The Disease of Hope&lt;/em&gt;, we didn’t import our footage immediately and instead just stored the camera (with SD card) we had used in one of our lockers. Unfortunately, a bit later, we dropped the SD card and, despite it being flash storage, it became corrupted and we lost an interview. Minimize the possibility of losing data by importing as soon as you can and then immediately backing up to teammates’ computers, external storage, and/or the cloud.&lt;/p&gt;
+
+&lt;h2 id=&quot;know-the-capabilities-of-your-devices&quot;&gt;Know the Capabilities of Your Devices&lt;/h2&gt;
+
+&lt;p&gt;You should know if your phone or tablet is capable of recording HD video. You should know if your computer can record audio. You never know when you’ll have to throw together some recording rig on the spot and you can’t guarantee you’ll have working, dedicated A/V gear on hand. It’s also just good practice to use everything. For example, if you take video from a camcorder and record audio on a laptop and a phone at the same time, perhaps the audio from the phone is higher quality than the audio recorded from the camcorder, in which case you can just sync up the audio track with the video track and replace the camcorder’s audio. For NHD projects, I’ve used computers, phones, and even DSLRs for audio recording. In the case of camera failure, a phone with HD video recording capability can help cover for it (though you’ll seem less professional to your interviewee).&lt;/p&gt;
+
+&lt;h2 id=&quot;test-and-practice-with-your-equipment-beforehand&quot;&gt;Test and Practice With Your Equipment Beforehand&lt;/h2&gt;
+
+&lt;p&gt;Pretty self explanatory. Test recording a long video on whatever equipment you intend on using and &lt;strong&gt;actually import it into your computer and make sure you can use it&lt;/strong&gt;. A lot of camcorders will record in .MTS format. Do you have software to convert .MTS video files to something more useful? If not, find another device to use.&lt;/p&gt;
+
+&lt;h2 id=&quot;set-up-your-equipment-in-a-timely-manner&quot;&gt;Set Up Your Equipment in a Timely Manner&lt;/h2&gt;
+
+&lt;p&gt;Nothing is more unprofessional than looking unprepared. Either set up in advance or be able to put together your setup quickly. One of our interviewees told us that we set up our equipment for our interview with him faster than a TV station did for theirs. Don’t keep the interviewee waiting.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Create a Custom Weebly Theme</title>
+   <link href="http://christopher.su//2014/create-custom-weebly-theme/"/>
+   <updated>2014-01-24T00:00:00+00:00</updated>
+   <id>http://christopher.su/2014/create-custom-weebly-theme</id>
+   <content type="html">&lt;p&gt;To create a custom Weebly theme, first go to the Design tab of the editor and choose one of Weebly’s available themes. Then, back in the Design tab, click on the “Edit HTML/CSS” button near the bottom of the sidebar:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/uploads/Screen-Shot-2014-01-23-at-1.48.52-PM.jpg&quot;&gt;&lt;img class=&quot;alignnone  wp-image-875&quot; alt=&quot;Screen Shot 2014-01-23 at 1.48.52 PM&quot; src=&quot;/assets/uploads/Screen-Shot-2014-01-23-at-1.48.52-PM-618x1024.jpg&quot; width=&quot;371&quot; height=&quot;614&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;This will open the editor. Press save in the upper-righthand corner and it will ask you for a name for your new custom theme. It may be necessary to make a change in one of the theme files for this to come up (just add a space somewhere in the CSS or something):&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/uploads/Screen-Shot-2014-01-23-at-1.54.47-PM.jpg&quot;&gt;&lt;img class=&quot;alignnone size-large wp-image-876&quot; alt=&quot;Screen Shot 2014-01-23 at 1.54.47 PM&quot; src=&quot;/assets/uploads/Screen-Shot-2014-01-23-at-1.54.47-PM-1024x567.jpg&quot; width=&quot;625&quot; height=&quot;346&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Name your theme whatever you want and your website will be set to use your custom theme (as opposed to the Weebly theme you chose in the beginning). You can now throw away all their HTML and CSS and replace it with code that is entirely your own.&lt;/p&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Compressing Image Files to Save Space</title>
+   <link href="http://christopher.su//2014/compressing-image-files-save-space/"/>
+   <updated>2014-01-24T00:00:00+00:00</updated>
+   <id>http://christopher.su/2014/compressing-image-files-save-space</id>
+   <content type="html">&lt;p&gt;If you have a lot of video elements in your website, you may find yourself running out of your storage quota. Compressing large images can help you regain some of that space back. Here’s how.&lt;/p&gt;
+
+&lt;h2 id=&quot;compressing-and-resizing-images-using-adobe-photoshop&quot;&gt;Compressing and Resizing Images using Adobe Photoshop&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Open the image in Photoshop.&lt;/li&gt;
+  &lt;li&gt;Go to File &amp;gt; Save for Web…&lt;br /&gt;
+&lt;a href=&quot;/assets/uploads/Screen-Shot-2014-01-25-at-3.07.25-PM.jpg&quot;&gt;&lt;img class=&quot;alignnone size-medium wp-image-898&quot; alt=&quot;Screen Shot 2014-01-25 at 3.07.25 PM&quot; src=&quot;/assets/uploads/Screen-Shot-2014-01-25-at-3.07.25-PM-220x300.jpg&quot; width=&quot;220&quot; height=&quot;300&quot; /&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;The following window should appear (click to enlarge):&lt;br /&gt;
+&lt;a href=&quot;/assets/uploads/Screen-Shot-2014-01-25-at-3.08.19-PM.jpg&quot;&gt;&lt;img class=&quot;alignnone size-medium wp-image-899&quot; alt=&quot;Screen Shot 2014-01-25 at 3.08.19 PM&quot; src=&quot;/assets/uploads/Screen-Shot-2014-01-25-at-3.08.19-PM-300x218.jpg&quot; width=&quot;300&quot; height=&quot;218&quot; /&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Using the dropdown menu in the upper-righthand corner, select another file format (GIF generally takes up less space but is lower quality, JPEG is in the middle, and PNG takes up the most space but is higher quality. GIF and PNG support transparency, JPEG kind of does).&lt;br /&gt;
+&lt;a href=&quot;/assets/uploads/Screen-Shot-2014-01-25-at-3.08.37-PM.jpg&quot;&gt;&lt;img class=&quot;alignnone  wp-image-900&quot; alt=&quot;Screen Shot 2014-01-25 at 3.08.37 PM&quot; src=&quot;/assets/uploads/Screen-Shot-2014-01-25-at-3.08.37-PM.jpg&quot; width=&quot;210&quot; height=&quot;280&quot; /&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;File size savings (in KB) are shown in the bottom righthand corner of the window.&lt;/li&gt;
+  &lt;li&gt;Images can also be resized in the sidebar. Ensure proportions are locked before resizing.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;resizing-images-on-a-mac-using-preview&quot;&gt;Resizing Images on a Mac using Preview&lt;/h2&gt;
+
+&lt;p&gt;Open the image in preview and go to Tools &amp;gt; Adjust Size in the menubar:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/uploads/Screen-Shot-2014-01-23-at-1.11.42-PM.jpg&quot;&gt;&lt;img class=&quot;alignnone  wp-image-861&quot; alt=&quot;Screen Shot 2014-01-23 at 1.11.42 PM&quot; src=&quot;/assets/uploads/Screen-Shot-2014-01-23-at-1.11.42-PM.jpg&quot; width=&quot;427&quot; height=&quot;333&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;In the resulting dropdown window, change the pixels to the largest size you’ll ever need the image to be in your website. For instance, if you’re resizing the header banner and you know your theme is only 900px wide, then there is no need for your header banner image to be longer than 900px. Resize it so that it is only 900px. Make sure you have the “scale proportionally” checkbox checked. The resulting size section of the window will show you how much space you’re saving in KB.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/uploads/Screen-Shot-2014-01-23-at-1.13.53-PM.jpg&quot;&gt;&lt;img class=&quot;alignnone  wp-image-864&quot; alt=&quot;Screen Shot 2014-01-23 at 1.13.53 PM&quot; src=&quot;/assets/uploads/Screen-Shot-2014-01-23-at-1.13.53-PM.jpg&quot; width=&quot;511&quot; height=&quot;492&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Fixing Gmail Archive with the Delete Key in Apple Mail on Mavericks</title>
+   <link href="http://christopher.su//2013/fixing-gmail-archive-delete-key-apple-mail-mavericks/"/>
+   <updated>2013-10-30T00:00:00+00:00</updated>
+   <id>http://christopher.su/2013/fixing-gmail-archive-delete-key-apple-mail-mavericks</id>
+   <content type="html">&lt;p&gt;Mac OS X Mavericks included some changes to Apple Mail that made the delete key actually send messages to the Trash in Gmail, even if it was previously configured in Lion to archive messages upon the delete key (usually through &amp;#8220;use this mailbox for…&amp;#8221; or the trash preferences in the accounts panel of the preferences). People started noticing this problem of deleting messages on Mavericks:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://productforums.google.com/forum/#!msg/gmail/IvtEJrG2W7A/TEnQcg5LsTUJ&quot;&gt;https://productforums.google.com/forum/#!msg/gmail/IvtEJrG2W7A/TEnQcg5LsTUJ&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://tidbits.com/article/14219&quot;&gt;http://tidbits.com/article/14219&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Here&amp;#8217;s the solution I found. Go to the Labels area of the Gmail settings and uncheck the &amp;#8220;Show in IMAP&amp;#8221; checkbox next to the Trash label:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/uploads/Screen-Shot-2013-10-29-at-11.00.26-PM.jpg&quot;&gt;&lt;img class=&quot;alignnone size-large wp-image-832&quot; alt=&quot;Screen Shot 2013-10-29 at 11.00.26 PM&quot; src=&quot;/assets/uploads/Screen-Shot-2013-10-29-at-11.00.26-PM-1024x341.jpg&quot; width=&quot;625&quot; height=&quot;208&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Now set your IMAP Auto-Expunge settings to these:&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;alignnone size-large wp-image-838&quot; style=&quot;font-size: 1rem; line-height: 1;&quot; alt=&quot;Screen Shot 2013-10-30 at 11.10.47 AM&quot; src=&quot;/assets/uploads/Screen-Shot-2013-10-30-at-11.10.47-AM-1024x469.jpg&quot; width=&quot;625&quot; height=&quot;286&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Edit: I tried turning Auto-Expunge on and it still worked. It might just be the setting after it that matters.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Then, try deleting a message in Apple Mail. You might see a new folder appear in your drawer. A little error symbol will appear next to the Trash in your drawer. If you click on it, you will get a message like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/uploads/Screen-Shot-2013-10-29-at-11.05.09-PM.jpg&quot;&gt;&lt;img class=&quot;alignnone  wp-image-834&quot; alt=&quot;Screen Shot 2013-10-29 at 11.05.09 PM&quot; src=&quot;/assets/uploads/Screen-Shot-2013-10-29-at-11.05.09-PM.jpg&quot; width=&quot;312&quot; height=&quot;150&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;In other words, Apple Mail is just sticking it into a folder. Gmail treats this as the message being removed from this Inbox and it will appear in All Mail and not in Gmail&amp;#8217;s Trash.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Edit: Better explanation, as I&amp;#8217;ve figured more stuff out. I think it works like this: Apple Mail will attempt to delete the message, but will be forced to put it into a local &amp;#8220;Deleted Messages&amp;#8221; folder when it can&amp;#8217;t find the IMAP Trash label. Gmail will then Auto-Expunge the email and Archive it when it is marked as &amp;#8220;deleted&amp;#8221;. Apple Mail then detects the message in &amp;#8220;All Mail&amp;#8221; and moves the message from the local Deleted Messages folder to the All Mail folder.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Edit: I believe the second checkbox in the Trash section of your account in Mail&amp;#8217;s preferences should become unchecked if this is done correctly:&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/uploads/Screen-Shot-2013-10-30-at-11.20.47-AM.jpg&quot;&gt;&lt;img class=&quot;alignnone  wp-image-845&quot; alt=&quot;Screen Shot 2013-10-30 at 11.20.47 AM&quot; src=&quot;/assets/uploads/Screen-Shot-2013-10-30-at-11.20.47-AM.jpg&quot; width=&quot;479&quot; height=&quot;534&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Fixing Ruby on Mac OS X Mavericks</title>
+   <link href="http://christopher.su//2013/fixing-ruby-mac-os-mavericks/"/>
+   <updated>2013-10-28T00:00:00+00:00</updated>
+   <id>http://christopher.su/2013/fixing-ruby-mac-os-mavericks</id>
+   <content type="html">&lt;p&gt;Mavericks totally broke Ruby for me. Here’s how I fixed it:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Updated from Xcode 4 to Xcode 5&lt;/li&gt;
+  &lt;li&gt;Installed rvm&lt;/li&gt;
+  &lt;li&gt;Installed Ruby 1.9.3 through rvm&lt;/li&gt;
+  &lt;li&gt;Got an &lt;code class=&quot;highlighter-rouge&quot;&gt;icu required&lt;/code&gt; error when trying to install gems. Tried to run &lt;code class=&quot;highlighter-rouge&quot;&gt;brew install icu4c&lt;/code&gt;, it failed. Tried to run &lt;code class=&quot;highlighter-rouge&quot;&gt;brew update&lt;/code&gt;, got the &lt;code class=&quot;highlighter-rouge&quot;&gt;error: Your local changes to the following files would be overwritten by merge&lt;/code&gt;. Ran:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cd brew --prefix
+git remote add origin https://github.com/mxcl/homebrew.git
+git fetch origin
+git reset --hard origin/master&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Ran &lt;code class=&quot;highlighter-rouge&quot;&gt;brew update&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Ran &lt;code class=&quot;highlighter-rouge&quot;&gt;brew install icu4c&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Installed gems. Done!&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Last.fm Fails to Properly Import Play Count from iTunes</title>
+   <link href="http://christopher.su//2013/last-fm-fails-properly-import-play-count-itunes/"/>
+   <updated>2013-08-05T00:00:00+00:00</updated>
+   <id>http://christopher.su/2013/last-fm-fails-properly-import-play-count-itunes</id>
+   <content type="html">&lt;p&gt;I started using Last.fm again today and I noticed that my initial import of my iTunes library was incorrect. I gave it some time, knowing that Last.fm sometimes has issues with counting and its numbers, and they were still incorrect. Upon further investigation, I noticed that the play counts matched those of an old iTunes library, one stored in &lt;code class=&quot;highlighter-rouge&quot;&gt;~/Music/iTunes Music Library.xml&lt;/code&gt;, while my actual library resides in &lt;code class=&quot;highlighter-rouge&quot;&gt;~/Music/iTunes Library.xml&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;~/Music/iTunes Library.itl&lt;/code&gt;. &lt;strong&gt;Last.fm for Mac (at the time of writing) uses the incorrect iTunes files for its import.&lt;/strong&gt; This results in either old, incorrect play counts (if the incorrect file exists) or absolutely no importing at all, resulting in no play counts being uploaded to Last.fm (this happened after I removed the old file, hoping Last.fm would detect the correct, new file and use it; it didn’t). Checking the console, it is found that Last.fm searches for &lt;code class=&quot;highlighter-rouge&quot;&gt;iTunes Music Library.xml&lt;/code&gt;, even when newer iTunes versions use &lt;code class=&quot;highlighter-rouge&quot;&gt;iTunes Library.xml&lt;/code&gt;. Apple makes it clear on their website that this is the proper filename, Last.fm just hasn’t updated their software accordingly.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/uploads/Screen-Shot-2013-08-05-at-11.11.46-PM.jpg&quot;&gt;&lt;img class=&quot;alignnone size-large wp-image-819&quot; alt=&quot;Screen Shot 2013-08-05 at 11.11.46 PM&quot; src=&quot;/assets/uploads/Screen-Shot-2013-08-05-at-11.11.46-PM-1024x474.jpg&quot; width=&quot;625&quot; height=&quot;289&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The Last.fm desktop client’s GitHub repository is rather disorganized, so I decided it wasn’t worth all the trouble to make a pull request fixing this.&lt;/p&gt;
+
+&lt;p&gt;Additional information: Last.fm for Mac (latest version, official, downloaded today, reinstalled multiple times) on OS X 10.8.3.&lt;/p&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Make Text Visible When It Blends Into the Background</title>
+   <link href="http://christopher.su//2013/text-visible-blends-background/"/>
+   <updated>2013-07-21T00:00:00+00:00</updated>
+   <id>http://christopher.su/2013/text-visible-blends-background</id>
+   <content type="html">&lt;p&gt;Sometimes, when you put text onto an image with great variation in the background (ex. some dark parts, some bright parts, etc.) it may be impossible to have all of the text remain prominent and visible regardless of what color you set the text.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/uploads/Screen-Shot-2013-07-21-at-3.40.01-PM.jpg&quot;&gt;&lt;img class=&quot;alignnone size-large wp-image-794&quot; alt=&quot;Screen Shot 2013-07-21 at 3.40.01 PM&quot; src=&quot;/assets/uploads/Screen-Shot-2013-07-21-at-3.40.01-PM-1024x358.jpg&quot; width=&quot;625&quot; height=&quot;218&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;When this happens, simply right click on the layer in Photoshop and select “Blending Options…”:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/uploads/Screen-Shot-2013-07-21-at-3.40.33-PM.jpg&quot;&gt;&lt;img class=&quot;alignnone  wp-image-795&quot; alt=&quot;Screen Shot 2013-07-21 at 3.40.33 PM&quot; src=&quot;/assets/uploads/Screen-Shot-2013-07-21-at-3.40.33-PM-522x1024.jpg&quot; width=&quot;250&quot; height=&quot;491&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Then, in the resulting window, select “Stroke”. The checkbox beside it should automatically check itself. You should see a preview on the image, with a stroke around the text. You can change the opacity, size, and color of the stroke around the text in the window.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/uploads/Screen-Shot-2013-07-21-at-3.40.43-PM.jpg&quot;&gt;&lt;img class=&quot;alignnone size-large wp-image-796&quot; alt=&quot;Screen Shot 2013-07-21 at 3.40.43 PM&quot; src=&quot;/assets/uploads/Screen-Shot-2013-07-21-at-3.40.43-PM-1024x835.jpg&quot; width=&quot;625&quot; height=&quot;509&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;When you’re done, press “OK” and your changes will be saved.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/uploads/Screen-Shot-2013-07-21-at-3.40.44-PM.jpg&quot;&gt;&lt;img class=&quot;alignnone size-large wp-image-797&quot; alt=&quot;Screen Shot 2013-07-21 at 3.40.44 PM&quot; src=&quot;/assets/uploads/Screen-Shot-2013-07-21-at-3.40.44-PM-1024x337.jpg&quot; width=&quot;625&quot; height=&quot;205&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Pairing NXT Bricks through Bluetooth with RobotC in a Virtual Machine on a Mac</title>
+   <link href="http://christopher.su//2013/pairing-nxt-bricks-bluetooth-robotc-virtual-machine-mac/"/>
+   <updated>2013-06-16T00:00:00+00:00</updated>
+   <id>http://christopher.su/2013/pairing-nxt-bricks-bluetooth-robotc-virtual-machine-mac</id>
+   <content type="html">&lt;p&gt;For two FTC robotics seasons, I ran RobotC in a virtual machine on Mac OS X. One of the most frequent problems I encountered was being unable to connect to NXT bricks by bluetooth. While USB connections always worked, bluetooth pairings were far less reliable. Bricks would often disconnect or fail to establish a pairing in the first place, throwing errors like the following:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/uploads/Screen-Shot-2013-02-28-at-9.59.27-AM.jpg&quot;&gt;&lt;img class=&quot;alignnone size-large wp-image-754&quot; alt=&quot;Screen Shot 2013-02-28 at 9.59.27 AM&quot; src=&quot;/assets/uploads/Screen-Shot-2013-02-28-at-9.59.27-AM-1024x640.jpg&quot; width=&quot;625&quot; height=&quot;390&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Eventually, I developed this more or less foolproof method of ensuring a stable bluetooth pairing.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;span style=&quot;line-height: 14px;&quot;&gt;Go to System Preferences in Mac OS X, go to the bluetooth section, and remove the NXT brick you want to connect to from the list of devices (if it is listed there)&lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;Ensure that the brick is on, bluetooth is enabled, and the brick is discoverable&lt;/li&gt;
+  &lt;li&gt;In the bluetooth area of System Preferences, click the plus sign button in the bottom righthand corner and use the wizard to add the NXT brick as a device. At this point, the window should look something like this:&lt;a href=&quot;/assets/uploads/Screen-Shot-2013-02-27-at-8.58.06-PM.jpg&quot;&gt;&lt;img class=&quot;alignnone size-large wp-image-756&quot; alt=&quot;Screen Shot 2013-02-27 at 8.58.06 PM&quot; src=&quot;/assets/uploads/Screen-Shot-2013-02-27-at-8.58.06-PM.jpg&quot; /&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;This is where it gets weird. If you look at the screenshot above, you’ll see “Dev B” listed under “Services”. This is a serial port that the computer can use to communicate with the brick. For whatever reason, the service doesn’t always show up. In order to get it to show up (in the case that it doesn’t appear automatically after the bluetooth device is added), you need to select the NXT brick in the list of devices, click the little cog icon to open the drop down menu, and then choose to edit the settings for the device. The computer should then search for services and a drop down like the following should appear:&lt;a href=&quot;/assets/uploads/Screen-Shot-2013-02-25-at-12.47.58-PM.jpg&quot;&gt;&lt;img class=&quot;alignnone size-large wp-image-758&quot; alt=&quot;Screen Shot 2013-02-25 at 12.47.58 PM&quot; src=&quot;/assets/uploads/Screen-Shot-2013-02-25-at-12.47.58-PM-1024x803.jpg&quot; width=&quot;625&quot; height=&quot;490&quot; /&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Check the checkboxes for any RS-232 services that appear to ensure they are on and click the “Apply” button to save the settings.&lt;/li&gt;
+  &lt;li&gt;Now go to Windows in your virtual machine and go to Control Panel &amp;gt; Hardware and Sound &amp;gt; Devices and Printers &amp;gt; Bluetooth Devices. The devices you added on the Mac side should appear in the window if your virtual machine’s bluetooth is setup properly. Right click on the NXT brick you would like to use, choose Properties in the menu, and go to the services tab of the resulting window. In that window, ensure that the two serial port checkboxes are checked and hit apply.&lt;a href=&quot;/assets/uploads/Screen-Shot-2013-02-25-at-12.44.54-PM.jpg&quot;&gt;&lt;img class=&quot;alignnone size-large wp-image-760&quot; alt=&quot;Screen Shot 2013-02-25 at 12.44.54 PM&quot; src=&quot;/assets/uploads/Screen-Shot-2013-02-25-at-12.44.54-PM-1024x640.jpg&quot; width=&quot;625&quot; height=&quot;390&quot; /&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Now go to RobotC and add the brick as you normally would. RobotC should detect and open communications with the brick successfully.&lt;/li&gt;
+&lt;/ol&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Saving Pocket Links to a New File Every Day using Dropbox, IFTTT, and launchd</title>
+   <link href="http://christopher.su//2013/saving-pocket-links-file-day-dropbox-ifttt-launchd/"/>
+   <updated>2013-03-27T00:00:00+00:00</updated>
+   <id>http://christopher.su/2013/saving-pocket-links-file-day-dropbox-ifttt-launchd</id>
+   <content type="html">&lt;p&gt;For the past year, I’ve been saving interesting links by copying and pasting their URLs into Markdown files in a Git repository that were then browsable through a Gollum wiki. I created a new file each day and just made an unordered list of links that I found on that day. There were a few problems with this method:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;While it was possible for me to create an automator action or something that would facilitate the process, I never bothered to do so and copying and pasting the links from the Chrome location bar into Sublime Text took too much time.&lt;/li&gt;
+  &lt;li&gt;The title of the page wasn’t included and the URLs alone weren’t always enough to tell what the page included (ex. YouTube permalinks don’t provide very much information).&lt;/li&gt;
+  &lt;li&gt;Technically, just pasting links into Markdown isn’t proper formatting. While most Markdown parsers will automatically link URLs, it’s more proper to wrap them in &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt; and &amp;gt;&lt;/code&gt; if they’re bare URLs or using &lt;code class=&quot;highlighter-rouge&quot;&gt;[] and ()&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The solution:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Use Pocket to gather interesting links. I chose Pocket because it has tagging (although I don’t really use them because it takes time to enter them), excerpts (which come into play later), and a plethora of browser extensions, mobile apps, etc.&lt;/li&gt;
+  &lt;li&gt;Use IFTTT to automatically take new links added to Pocket and insert them into text files in Dropbox which are then synced into Gollum.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;IFTTT can be set to trigger a Dropbox append action whenever a new link is added to Pocket. The parameters that IFTTT offers are also useful as they allow for some more information to be added to the link than just the URL, such as the page title and an excerpt (although the excerpts don’t always come out nicely). Here’s what I have in the “content” section of my IFTTT receipe:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;### []()&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;&amp;lt;i&amp;gt;&amp;lt;/i&amp;gt;&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
+&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
+- - -&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;I tried to use the AddedAt ingredient in the file name, but the ingredient returns the date and time the link was added in the following format: &lt;code class=&quot;highlighter-rouge&quot;&gt;March 22, 2013 at 12:40PM&lt;/code&gt;, which isn’t very useful for our purposes.&lt;/p&gt;
+
+&lt;p&gt;I’ve also &lt;a href=&quot;https://ifttt.com/recipes/86555&quot;&gt;shared my receipe&lt;/a&gt;, in case anyone else wants to use and/or modify it.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/uploads/Screen-Shot-2013-03-27-at-3.00.23-PM.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;There was only one problem with this: for some reason, IFTTT’s Dropbox actions don’t let you change the filename of the file you wish to append text to. In other words, rather than getting one text file of links for each day, one massive text file containing links from all days is created. I came up with a quick way to fix this: use launchd.&lt;/p&gt;
+
+&lt;p&gt;I created a launchd file that runs a bash script every day at midnight that does the following:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Append a Markdown title with the date to the top of the text file (ex. &lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;# March 27, 2013 Links&quot;&lt;/code&gt;).&lt;/li&gt;
+  &lt;li&gt;Rename the file in Dropbox created by IFTTT to the &lt;code class=&quot;highlighter-rouge&quot;&gt;YYYY-MM-DD.md&lt;/code&gt; format.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Here’s my launchd task:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;plist&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;version=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1.0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;dict&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;Label&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;com.christophersu.dailylinks&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;ProgramArguments&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;array&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;/Users/christophersu/Dropbox-Gamma/Dropbox/Personal/Pocket/day.sh&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/array&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;RunAtLoad&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;false/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;StartCalendarInterval&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;array&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;dict&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;Hour&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;integer&amp;gt;&lt;/span&gt;23&lt;span class=&quot;nt&quot;&gt;&amp;lt;/integer&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;Minute&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;integer&amp;gt;&lt;/span&gt;59&lt;span class=&quot;nt&quot;&gt;&amp;lt;/integer&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/dict&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/array&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dict&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/plist&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;You’ll notice that it runs at 11:59 PM. This is because I wanted to append the proper title to the top of the file (&lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;# March 27, 2013&quot;&lt;/code&gt;) and have the correct date in the filename without having to write additional code in order to decrement the day counter and compensate for the last days of the month and such (if the decrement method is used, then when a “1″ is decremented, additional code is going to be needed to determine whether it should decrement to a “28″, “29″, “30″, or “31″). I didn’t want to have to deal with leap years and everything just to catch links that might have been saved between 11:59 PM and 12:00 PM.&lt;/p&gt;
+
+&lt;p&gt;Here’s the bash script it runs:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash  &lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;thedate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;date +%Y-%-m-%d&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;titlevar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;date &lt;span class=&quot;s1&quot;&gt;'+%B %e, %Y'&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# cd /Users/christophersu/Dropbox-Gamma/Dropbox/Personal/Pocket&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; -e &lt;span class=&quot;s2&quot;&gt;&quot;# &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$titlevar&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; | cat - /Users/christophersu/Dropbox-Gamma/Dropbox/Personal/Pocket/links.txt &amp;gt; /Users/christophersu/Dropbox-Gamma/Dropbox/Personal/Pocket/temp &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; mv /Users/christophersu/Dropbox-Gamma/Dropbox/Personal/Pocket/temp /Users/christophersu/Dropbox-Gamma/Dropbox/Personal/Pocket/links.txt
+mv /Users/christophersu/Dropbox-Gamma/Dropbox/Personal/Pocket/links.txt /Users/christophersu/Dropbox-Gamma/Dropbox/Personal/Links/&lt;span class=&quot;nv&quot;&gt;$thedate&lt;/span&gt;.md
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Removing Post and Comment Counts from Clean Archives Reloaded</title>
+   <link href="http://christopher.su//2013/removing-post-comment-counts-clean-archives-reloaded/"/>
+   <updated>2013-03-27T00:00:00+00:00</updated>
+   <id>http://christopher.su/2013/removing-post-comment-counts-clean-archives-reloaded</id>
+   <content type="html">&lt;p&gt;For some reason, the preferences for the &lt;a href=&quot;http://wordpress.org/extend/plugins/clean-archives-reloaded/&quot;&gt;Clean Archives Reloaded plugin&lt;/a&gt; for WordPress aren’t very substantial. The plugin hasn’t been updated in nearly three years and it doesn’t look like the plugin author intends on changing anything soon. The quickest way to remove the post and comment counts that appear parentheses to the months and posts respectively is to open the Plugin Editor in the WordPress dashboard, select the Clean Archives Plugin from the drop down menu in the upper right-hand corner of the screen, and then search for the following block of code:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// Generates the HTML output based on $atts array from the shortcode
+function PostList( $atts = array() ) {
+    global $wp_locale;
+
+    // Set any missing $atts items to the defaults
+    $atts = shortcode_atts(array(
+        'usejs'        =&amp;gt; get_option('car_usejs'),
+        'monthorder'   =&amp;gt; get_option('car_monthorder'),
+        'postorder'    =&amp;gt; get_option('car_postorder'),
+        'postcount'    =&amp;gt; '1',
+        'commentcount' =&amp;gt; '1',
+    ), $atts);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;In order to remove post and comment counts from the archives, simply replace the &lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;1&quot;&lt;/code&gt;‘s with &lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;0&quot;&lt;/code&gt;s. I’m not entirely sure why the plugin author didn’t just make it editable in the plugin’s preferences, considering that the majority of the code is already established for it. Perhaps a fork of the plugin is in order.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Changing Bookmarks Based on Date</title>
+   <link href="http://christopher.su//2012/changing-bookmarks-based-date/"/>
+   <updated>2012-12-15T00:00:00+00:00</updated>
+   <id>http://christopher.su/2012/changing-bookmarks-based-date</id>
+   <content type="html">&lt;p&gt;I use a local wiki powered by Gollum to keep myself organized. I use the following file structure:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;http://cats.are.cute:7890/Developer/Notes/2012-12-15
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;At first, I had a bookmark that linked to a page that had an index of all the pages in the /Developer/Notes/ section of the wiki. But that took two steps to get to a day’s page. I would have to click the bookmark to the index, and then choose the specific day in the index. To shorten the process, I created the following TextExpander snippet that would automatically enter the URL for the current day’s page.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;http://cats.are.cute:7890/Dailies/%Y-%1m-%e
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This reduced the number of steps to only one, but added typing to the process (have to type the abbreviation for the snippet to have it expand). That was still too much work for me, so I wrote some JavaScript bookmarklets that set the browser’s location to a URL that changes based on the day:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;javascript:d=new Date();window.open(&quot;http://cats.are.cute:7890/Developer/Notes/&quot;+(1900+d.getYear())+&quot;-&quot;+(d.getMonth()+1)+&quot;-&quot;+d.getDate(), &quot;_self&quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now it’s just one step: one click. Note that 1900 must be added to getYear() because getYear() returns the number of years since 1900. 1 must be added to getMonth() because getMonth() starts at 0, where 0 is January. getDate() works as expected.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Increment and Decrement Bookmarklets</title>
+   <link href="http://christopher.su//2012/increment-decrement-bookmarklets/"/>
+   <updated>2012-12-06T00:00:00+00:00</updated>
+   <id>http://christopher.su/2012/increment-decrement-bookmarklets</id>
+   <content type="html">&lt;p&gt;My &lt;a href=&quot;https://github.com/github/gollum&quot;&gt;gollum&lt;/a&gt; installation is organized so that I have a different file for keeping developer notes each day:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;http://cats.are.cute:7890/Developer/Notes/2012-12-6
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;I like to read through my notes chronologically so I can see my progress and changes over time. In order to browse through these pages quickly without having to edit the URL directly in the location bar or writing “next” and “previous” links into every file, I use JavaScript bookmarklets that increment and decrement the last integer in the URL.&lt;/p&gt;
+
+&lt;p&gt;The decrement bookmarklet:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;javascript:(function()%7B%20var%20e,s%3B%20IB%3D-1%3B%20function%20isDigit(c)%20%7B%20return%20(%220%22%20%3C%3D%20c%20%26%26%20c%20%3C%3D%20%229%22)%20%7D%20L%20%3D%20location.href%3B%20LL%20%3D%20L.length%3B%20for%20(e%3DLL-1%3B%20e%3E%3D0%3B%20--e)%20if%20(isDigit(L.charAt(e)))%20%7B%20for(s%3De-1%3B%20s%3E%3D0%3B%20--s)%20if%20(!isDigit(L.charAt(s)))%20break%3B%20break%3B%20%7D%20%2B%2Bs%3B%20if%20(e%3C0)%20return%3B%20oldNum%20%3D%20L.substring(s,e%2B1)%3B%20newNum%20%3D%20%22%22%20%2B%20(parseInt(oldNum,10)%20%2B%20IB)%3B%20while%20(newNum.length%20%3C%20oldNum.length)%20newNum%20%3D%20%220%22%20%2B%20newNum%3B%20location.href%20%3D%20L.substring(0,s)%20%2B%20newNum%20%2B%20L.slice(e%2B1)%3B%20%7D)()%3B
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The increment bookmarklet:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;javascript:(function()%7B%20var%20e,s%3B%20IB%3D1%3B%20function%20isDigit(c)%20%7B%20return%20(%220%22%20%3C%3D%20c%20%26%26%20c%20%3C%3D%20%229%22)%20%7D%20L%20%3D%20location.href%3B%20LL%20%3D%20L.length%3B%20for%20(e%3DLL-1%3B%20e%3E%3D0%3B%20--e)%20if%20(isDigit(L.charAt(e)))%20%7B%20for(s%3De-1%3B%20s%3E%3D0%3B%20--s)%20if%20(!isDigit(L.charAt(s)))%20break%3B%20break%3B%20%7D%20%2B%2Bs%3B%20if%20(e%3C0)%20return%3B%20oldNum%20%3D%20L.substring(s,e%2B1)%3B%20newNum%20%3D%20%22%22%20%2B%20(parseInt(oldNum,10)%20%2B%20IB)%3B%20while%20(newNum.length%20%3C%20oldNum.length)%20newNum%20%3D%20%220%22%20%2B%20newNum%3B%20location.href%20%3D%20L.substring(0,s)%20%2B%20newNum%20%2B%20L.slice(e%2B1)%3B%20%7D)()%3B
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;I then added them to my bookmarks bar and named them using greater than (&amp;gt;) and less than (&amp;lt;) signs. Example usage: using the increment bookmarklet on &lt;code class=&quot;highlighter-rouge&quot;&gt;http://cats.are.cute:7890/Developer/Notes/2012-12-6&lt;/code&gt; directs the browser to &lt;code class=&quot;highlighter-rouge&quot;&gt;http://cats.are.cute:7890/Developer/Notes/2012-12-7&lt;/code&gt;.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Automatically Committing to Git in TextMate</title>
+   <link href="http://christopher.su//2012/automatically-committing-git-textmate/"/>
+   <updated>2012-12-06T00:00:00+00:00</updated>
+   <id>http://christopher.su/2012/automatically-committing-git-textmate</id>
+   <content type="html">&lt;p&gt;With my Gollum installation and Jekyll powered website, I often commit changes after saving a file. This two-step process can be reduced to a single step by having TextMate commit to git automatically after a file save. This is done by going to “Bundles” in the menubar, going to Bundle Editor &amp;gt; Edit Commands…, creating a new command to save and commit to git, and assigning it a keyboard shortcut.&lt;/p&gt;
+
+&lt;p&gt;Here is the command that I use:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#!/usr/bin/env ruby&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ENV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;TM_FILEPATH&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;last&lt;/span&gt;
+&lt;span class=&quot;sb&quot;&gt;`git add &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ENV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;TM_FILEPATH&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+&lt;span class=&quot;sb&quot;&gt;`git commit -m &quot;Updated &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt; (TextMate)&quot;`&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;I set the command to save the “Current File” and input the “Entire Document”. I assigned the key-binding to Commmand+S because I intend on committing almost every file I save. To have the command request a commit message for the commit, this command can be used, which displays a pop up dialog requesting a message:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#!/usr/bin/env ruby&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ENV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;TM_FILEPATH&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;last&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ENV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'TM_SUPPORT_PATH'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'/lib/ui'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;message&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;TextMate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;UI&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;request_string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:title&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Commiting changes of &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:prompt&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Please enter the commit message for your changes.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sb&quot;&gt;`git add &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ENV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;TM_FILEPATH&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt; 2&amp;gt;&amp;amp;1`&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;commit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sb&quot;&gt;`git commit -m &quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;&quot; 2&amp;gt;&amp;amp;1`&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;git_answer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;commit&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;unless&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;git_answer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;grep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/fatal/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;empty?&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Please initialize git repository first!&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Day One to Gollum</title>
+   <link href="http://christopher.su//2012/day-one-to-gollum/"/>
+   <updated>2012-12-02T00:00:00+00:00</updated>
+   <id>http://christopher.su/2012/day-one-to-gollum</id>
+   <content type="html">&lt;p&gt;I’ve been saving notes, bookmarks, quotes, etc. in Day One for a while now, however, today I began the switch to Gollum.&lt;/p&gt;
+
+&lt;h3 id=&quot;benefits-of-gollum&quot;&gt;Benefits of Gollum&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Powered by Ruby&lt;/strong&gt; and multiplatform (as opposed to Day One, which is only available for Mac and iOS)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Flatfile structure&lt;/strong&gt; (Day One saves files in some peculiar property list type files, Gollum uses .md, .txt, etc.). This allows for the organization of entries into folders.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Wiki-style linking&lt;/strong&gt; (much easier to navigate than Day One, which is only navigatable by date)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Much better search&lt;/strong&gt; (Day One search lags and the way it displays results isn’t very helpful in finding which post you want)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Powered by Git&lt;/strong&gt;. This alone is a very good reason to switch to Gollum. Being able to revert to previous versions of entries is amazing.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Faster&lt;/strong&gt;. Day One has some lag on my computer.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Open source&lt;/strong&gt;, free, updating, and hackable. Day One is shareware. Gollum is made by the folks at GitHub and the source is available on GitHub. It updates often and it has a growing userbase.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Live preview editor&lt;/strong&gt;. Preview markdown output while you’re writing markdown. Awesome split screen editor.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Allows for external editors&lt;/strong&gt;. It’s almost impossible to use an external editor to edit entries in Day One.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Built-in web server&lt;/strong&gt;. Gollum serves its data over a web server that can be accessed on other devices.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;No need for export&lt;/strong&gt;. Day One’s inconvenient exporting (can’t export all entries with each entry as an individual file) has bothered me for a while now. With Gollum, there is no need to export, because pages are stored already as markdown files.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Syntax highlighting&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Support for other markup languages&lt;/strong&gt; (besides markdown)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;where-day-one-is-still-better&quot;&gt;Where Day One is still better&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Journaling purposes&lt;/strong&gt;. Day One’s chronological sorting makes it ideal for journaling. The time of creation of entries is also more promiment (Gollum also shows it, but only shows the time of the last edit, at the very bottom of each page. Time of creation may be found in the filesystem or using Git. Could easily be hacked to show date more prominently though).&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Embedding Documents with Google Docs</title>
+   <link href="http://christopher.su//2012/embedding-documents-google-docs/"/>
+   <updated>2012-10-21T00:00:00+00:00</updated>
+   <id>http://christopher.su/2012/embedding-documents-google-docs</id>
+   <content type="html">&lt;p&gt;Embedding documents can provide a way for website visitors to view documents without having to download them to their computers. We used this on the &lt;a href=&quot;http://18069595.nhd.weebly.com/interview-transcripts.html&quot;&gt;interview transcript&lt;/a&gt;, &lt;a href=&quot;http://18069595.nhd.weebly.com/process-paper.html&quot;&gt;process paper&lt;/a&gt;, and &lt;a href=&quot;http://18069595.nhd.weebly.com/annotated-bibliography.html&quot;&gt;bibliography&lt;/a&gt; pages of our website. This is a method to embed documents in Weebly without having to use Scribd.&lt;/p&gt;
+
+&lt;p&gt;&lt;center&gt;&lt;a href=&quot;http://18069595.nhd.weebly.com/frank-dikotter.html&quot;&gt;&lt;img class=&quot;alignnone  wp-image-579&quot; title=&quot;Screen Shot 2012-10-21 at 9.10.22 AM&quot; alt=&quot;&quot; src=&quot;/assets/uploads/2012/10/Screen-Shot-2012-10-21-at-9.10.22-AM-1024x530.jpg&quot; width=&quot;737&quot; height=&quot;382&quot; /&gt;&lt;/a&gt;&lt;/center&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;instructions&quot;&gt;Instructions&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Upload the document through the Weebly editor using a file element.&lt;sup&gt;&lt;a class=&quot;footnote-link&quot; href=&quot;#dont-delete&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; Note: this only works for certain file types. Google Docs cannot embed &lt;code&gt;.docx&lt;/code&gt; and &lt;code&gt;.doc&lt;/code&gt; files. PDFs seem to work best, so export your Word documents as PDFs and upload those instead.&lt;/li&gt;
+&lt;li&gt;Publish the website and visit the page with the newly uploaded document.&lt;/li&gt;
+&lt;li&gt;Right click on the &amp;#8220;Download file&amp;#8221; link and choose &amp;#8220;Copy Link Address&amp;#8221; or equivalent.&lt;/li&gt;
+&lt;li&gt;Paste your link into the field below and press &quot;Generate HTML&quot;.&lt;/li&gt;
+&lt;li&gt;Copy the HTML code that is generated for you.&lt;/li&gt;
+&lt;li&gt;Go back to the Weebly editor, create an HTML element&lt;sup&gt;&lt;a class=&quot;footnote-link&quot; href=&quot;#html-embed-element&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; on the page, and paste the code you copied into it. Done!&lt;sup&gt;&lt;a class=&quot;footnote-link&quot; href=&quot;#publish-done&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;label&gt;&lt;b&gt;Paste the link to your uploaded document:&lt;/b&gt;&lt;/label&gt;
+&lt;br /&gt;
+&lt;input type=&quot;text&quot; id=&quot;form-doc-url&quot; name=&quot;doc-url&quot; placeholder=&quot;Your document URL&quot; size=&quot;35&quot; style=&quot;font-size: 14pt;&quot; /&gt; 
+&lt;button type=&quot;submit&quot; id=&quot;form-submit&quot; style=&quot;font-size: 14pt;&quot;&gt;Generate HTML&lt;/button&gt;
+&lt;br /&gt;
+&lt;br /&gt;
+&lt;b&gt;Generated HTML Code:&lt;/b&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;textarea rows=&quot;4&quot; cols=&quot;80&quot; id=&quot;html-area&quot; style=&quot;font-size: 12pt;&quot; readonly=&quot;&quot;&gt;
+&lt;/textarea&gt;
+
+&lt;p&gt;Copy the code from the text box above and paste it into an HTML element in Weebly.&lt;/p&gt;
+
+&lt;p&gt;Alternatively, you can manually edit the code below and add it into an HTML element:&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;iframe&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;width: 900px; height: 900px;&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;INSERT LINK TO UPLOADED DOC BETWEEN QUOTES&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;height=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;240&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;width=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;320&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;frameborder=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/iframe&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Once you’ve got the embedded file to appear, you can adjust the &lt;code class=&quot;highlighter-rouge&quot;&gt;height&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;width&lt;/code&gt; numbers in the code to change the size of the embedded document.&lt;/p&gt;
+
+&lt;h3 id=&quot;footnotes&quot;&gt;Footnotes&lt;/h3&gt;
+&lt;p&gt;&lt;a class=&quot;footnote-anchor&quot; name=&quot;dont-delete&quot;&gt;1&lt;/a&gt;: Don’t delete this file element, otherwise the file embed won’t work! Also note that this is not the “document” element, but rather the “file” element.&lt;br /&gt;
+&lt;a class=&quot;footnote-anchor&quot; name=&quot;html-embed-element&quot;&gt;2&lt;/a&gt;: This might also be called an “embed code” element, or something along those lines, in the Weebly editor.&lt;br /&gt;
+&lt;a class=&quot;footnote-anchor&quot; name=&quot;html-embed-element&quot;&gt;3&lt;/a&gt;: You might not see the embedded document until you publish the website and view it live.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Mao&#8217;s Great Famine: The Interactive Data Map</title>
+   <link href="http://christopher.su//2012/maos-great-famine-interactive-data-map/"/>
+   <updated>2012-10-20T00:00:00+00:00</updated>
+   <id>http://christopher.su/2012/maos-great-famine-interactive-data-map</id>
+   <content type="html">&lt;p&gt;The website format of &lt;a href=&quot;http://nhd.org/&quot;&gt;National History Day&lt;/a&gt; projects has a variety of strengths, one of which is the possibility for user interaction. Wanting to utilize this possibility as much as possible, I created the “&lt;a href=&quot;http://18069595.nhd.weebly.com/interactive-data-map.html&quot;&gt;interactive data map&lt;/a&gt;” for &lt;a href=&quot;http://18069595.nhd.weebly.com/&quot;&gt;my group’s website&lt;/a&gt;, which took advantage of user interaction to convey information on the impact Mao’s reforms on death rates and grain output.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://18069595.nhd.weebly.com/interactive-data-map.html&quot;&gt;&lt;img class=&quot;alignnone  wp-image-573&quot; title=&quot;Screen Shot 2012-10-20 at 9.55.23 PM&quot; alt=&quot;&quot; src=&quot;/assets/uploads/2012/10/Screen-Shot-2012-10-20-at-9.55.23-PM-1024x506.jpg&quot; width=&quot;614&quot; height=&quot;304&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;First, we found sources from Chinese archives that contained information we wanted to present. We typed up this information by hand (which took a fairly long time), and then I played around with find and replace in a text editor for a while to get the typed up data into a decent HTML format. We gave each province its own HTML file containing data for just that province.&lt;/p&gt;
+
+&lt;p&gt;I then created another HTML file which contained an &lt;a href=&quot;http://www.w3schools.com/tags/tag_map.asp&quot;&gt;HTML image map&lt;/a&gt; of a map of China (we call it the “map image map”). I put a rectangular click box around the name of each province. I then created yet another HTML file, which contained two iFrames, one to show the map, and one to show the data. I then wrote in the links in the “map image map” to control the other iFrame.&lt;/p&gt;
+
+&lt;p&gt;After writing all of the HTML, I uploaded the HTML files for the map and provinces to the website, created a new page, and put in the code for the two side-by-side iFrames into an HTML element in Weebly.&lt;/p&gt;
+
+&lt;p&gt;Here’s the code for the “main” HTML that displayed the two iFrames side-by-side:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;iframe name=&quot;mapframe&quot; id=&quot;mapframe&quot; src=&quot;http://18069595.nhd.weebly.com/files/theme/mapframe.html&quot; height=400 width=58%&amp;gt;&amp;lt;/iframe&amp;gt;
+&amp;lt;iframe name=&quot;dataframe&quot; id=&quot;dataframe&quot; src=&quot;http://18069595.nhd.weebly.com/files/theme/dataframe.html&quot; height=400 width=40%&amp;gt;&amp;lt;/iframe&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Here’s what one of the links looks like in HTML to control another iFrame (note the &lt;code class=&quot;highlighter-rouge&quot;&gt;TARGET&lt;/code&gt; attribute):&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;a href=&quot;/files/theme/map_guangdong.html&quot; TARGET=&quot;dataframe&quot; id=&quot;rectangle11&quot;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Markdown on Mac</title>
+   <link href="http://christopher.su//2012/markdown-mac/"/>
+   <updated>2012-10-05T00:00:00+00:00</updated>
+   <id>http://christopher.su/2012/markdown-mac</id>
+   <content type="html">&lt;p&gt;I’ve been writing pretty much everything from notes and blog posts to todo lists and essays in Markdown for quite some time now, and I’ve found some applications and tools for Mac that make it especially convenient.&lt;/p&gt;
+
+&lt;h3 id=&quot;ia-writer-writing&quot;&gt;&lt;a href=&quot;http://www.iawriter.com/&quot;&gt;iA Writer&lt;/a&gt; — Writing&lt;/h3&gt;
+
+&lt;p&gt;iA Writer is often regarded as &lt;strong&gt;the&lt;/strong&gt; very best minimalistic text editor available for Mac. The focus mode is brilliant and the typeface is perfect for writing. I also like the way the HTML exports from iA Writer look. However, as part of its minimalistic approach, it really lacks features and customization. Even the font size cannot be changed.&lt;/p&gt;
+
+&lt;h3 id=&quot;textmate-writing&quot;&gt;&lt;a href=&quot;http://macromates.com/&quot;&gt;TextMate&lt;/a&gt; — Writing&lt;/h3&gt;
+
+&lt;p&gt;Because iA Writer doesn’t allow for the changing of font size (and it the font size is rather large), I use TextMate with the &lt;a href=&quot;http://ethanschoonover.com/solarized&quot;&gt;Solarized&lt;/a&gt; style to write long documents (ex. documentation, long blog posts, etc.) rather than iA Writer. The plethora of text wrangling features in TextMate also make it a breeze to perform actions like indenting large blocks of code. TextMate can also export and preview Markdown with HTML, but I prefer using Marked for those functions. TextMate can also open entire folders of files at once. This makes writing Markdown easier in cases involving multiple files (ex. writing &lt;a href=&quot;http://markdoc.org/&quot;&gt;Markdoc&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;http://www.sublimetext.com/&quot;&gt;Sublime Text 2&lt;/a&gt;&lt;/strong&gt; is a very popular alternative to TextMate (especially since TextMate 2 was not very well received).&lt;/p&gt;
+
+&lt;h3 id=&quot;textsoap-text-wrangling&quot;&gt;&lt;a href=&quot;http://www.unmarked.com/&quot;&gt;TextSoap&lt;/a&gt; — Text Wrangling&lt;/h3&gt;
+
+&lt;p&gt;I use TextSoap in conjunction with all of my Markdown text editors. I have created a variety of “cleaners” that help me quickly add Markdown line breaks, add bullets, and perform other handy Markdown edits.&lt;/p&gt;
+
+&lt;h3 id=&quot;marked-previewing-and-exporting&quot;&gt;&lt;a href=&quot;http://markedapp.com/&quot;&gt;Marked&lt;/a&gt; — Previewing and Exporting&lt;/h3&gt;
+
+&lt;p&gt;Marked is currently my favorite Markdown preview and export application. I used to use &lt;strong&gt;&lt;a href=&quot;http://mouapp.com/&quot;&gt;Mou&lt;/a&gt;&lt;/strong&gt;, but Marked has since taken its place. Marked supports exporting into a wide variety of formats, including RTF and HTML. It also allows for custom CSS stylesheets to be added. Perhaps the best feature is the automatically updating preview. When I edit text in iA Writer, the preview is updated in Marked with an indicator showing the latest change, without me even having to save the file in iA Writer.&lt;/p&gt;
+
+&lt;p&gt;I really like the Solarized color palette. I found &lt;a href=&quot;https://github.com/thomasf/solarized-css&quot;&gt;some CSS stylesheets&lt;/a&gt; that may be added to Marked to export Solarized-looking HTML. It isn’t a perfect adaptation though, and some of the font and color choices bother me a little bit, but nonetheless, it has more or less the same colors as Solarized.&lt;/p&gt;
+
+&lt;h3 id=&quot;day-one-organizing-and-writing&quot;&gt;&lt;a href=&quot;http://dayoneapp.com/&quot;&gt;Day One&lt;/a&gt; — Organizing and Writing&lt;/h3&gt;
+
+&lt;p&gt;I use Day One, developed by Bloom Built, to keep notes, links, journal entries, etc. Entires are written in Markdown. It’s ability to organize entries chronologically and its automatic timestamping is nice. The new photo feature is useful as well.&lt;/p&gt;
+
+&lt;h3 id=&quot;textexpander-text-wrangling&quot;&gt;&lt;a href=&quot;http://smilesoftware.com/TextExpander/&quot;&gt;TextExpander&lt;/a&gt; — Text Wrangling&lt;/h3&gt;
+
+&lt;p&gt;I have a variety of TextExpander macros or “snippets” that assist in inserting certain Markdown elements (like tables), especially those with parameters that need to be changed each time (ex. the column headings for tables). It really saves a lot of typing.&lt;/p&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Beginning iOS Development with Apache Cordova</title>
+   <link href="http://christopher.su//2012/beginning-ios-development-apache-cordova/"/>
+   <updated>2012-10-01T00:00:00+00:00</updated>
+   <id>http://christopher.su/2012/beginning-ios-development-apache-cordova</id>
+   <content type="html">&lt;p&gt;A quick guide to installing and beginning to develop with Apache Cordova on Mac.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;http://phonegap.com/download&quot;&gt;&lt;span style=&quot;line-height: 13px;&quot;&gt;Download Phonegap&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;span style=&quot;line-height: 13px;&quot;&gt;Unzip the archive. Move the folder to a permanent location. &lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;span style=&quot;line-height: 13px;&quot;&gt;Open the folder, go to the lib folder, go to iOS folder, go to the bin folder.&lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;span style=&quot;line-height: 13px;&quot;&gt;Open up a Terminal window.&lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;span style=&quot;line-height: 13px;&quot;&gt;Drag the create executable into the Terminal window. Type in the location of where you would like your project created. Type in the identifier for your project (ex. &lt;code&gt;com.christophersu.project&lt;/code&gt;). Type in the name of your project. Hit enter. Example of what this should look like: &lt;code&gt;Christopher-Su:~ christophersu$ /Users/christophersu/Code/phonegap/lib/ios/bin/create ~/Code/ExampleProject com.christophersu.ExampleProject ExampleProject&lt;/code&gt;&lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;span style=&quot;line-height: 13px;&quot;&gt;Type in &lt;code&gt;cd&lt;/code&gt; followed by the path to your project (ex. &lt;code&gt;Christopher-Su:~ christophersu$ cd ~/Code/ExampleProject&lt;/code&gt;)&lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;span style=&quot;line-height: 13px;&quot;&gt;Type in &lt;code&gt;cordova/debug&lt;/code&gt; to run the debug executable and build your project.&lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;span style=&quot;line-height: 13px;&quot;&gt;To emulate or simulate your project from the command line, run the &lt;code&gt;cordova/emulate&lt;/code&gt; executable. Note that this requires ios-sim to be installed (see below).&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;span style=&quot;line-height: 13px;&quot;&gt;If you get an error telling you to install ios-sim when running the emulate executable, this is the fastest way to install ios-sim:&lt;/span&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;ruby -e &quot;$(curl -fsSkL raw.github.com/mxcl/homebrew/go)&quot;&lt;/code&gt; in Terminal. This installs Homebrew.&lt;/li&gt;
+  &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;brew install ios-sim&lt;/code&gt;. Wait for it to complete.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;That’s it! Output should look like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Christopher-Su:~ christophersu$ brew install ios-sim
+==&amp;gt; Downloading https://github.com/phonegap/ios-sim/tarball/1.5
+######################################################################## 100.0%
+==&amp;gt; rake install prefix=/usr/local/Cellar/ios-sim/1.5
+/usr/local/Cellar/ios-sim/1.5: 4 files, 76K, built in 10 seconds
+Christopher-Su:~ christophersu$
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Photoshop&#8217;s Photomerge – Yunnan</title>
+   <link href="http://christopher.su//2012/photoshop-photomerge-yunnan/"/>
+   <updated>2012-09-30T00:00:00+00:00</updated>
+   <id>http://christopher.su/2012/photoshop-photomerge-yunnan</id>
+   <content type="html">&lt;p&gt;I’ve always wanted to produce somewhat of a decent image using Photoshop’s photomerge feature (under &lt;code class=&quot;highlighter-rouge&quot;&gt;File &amp;gt; Automate&lt;/code&gt;), but my previous attempts all failed… until today.&lt;/p&gt;
+
+&lt;p&gt;One afternoon on &lt;a href=&quot;/2012/photographs-yunnan/&quot;&gt;my trip to Yunnan&lt;/a&gt;, we were planned to do some manual labor in a corn field. The previous day, we had also done some manual labor and I brought my DSLR, but I didn’t use it much. Taking this into account, I decided not to bring my Canon 550D and Canon EF 50mm ƒ/1.2L (which weighs a ton) on this particular afternoon. Unfortunately, the labor wasn’t as intensive, we had a lot more free time, and the view was absolutely amazing. Upon seeing the view, I remember wishing I had followed the rule: “have a camera with you at all times”. Then I realized I had my phone, an iPhone 4S. Its camera is only 8 megapixels, it’s only ƒ/2.4, and the sensor is ridiculously tiny in comparison to that of the 550D, but nonetheless, it’s still a camera. I used the iOS default Camera app set to HDR mode. I didn’t have iOS 6, so I didn’t have the panorama feature. I took 32 shots (keeping non-HDR shots, so it was actually only 16 unique photos).&lt;/p&gt;
+
+&lt;p&gt;Afterwards, I stitched them together in Photoshop to create a panorama. I used photomerge on all the default settings (auto aligning and blending). It looked a little funky at first, because one of the photos was underexposed, but that was easily fixed in Photoshop. All in all, photomerge was very clever in its merging and blending. I’m not sure if Photoshop CS6 utilizes the GPU when photomerging, but regardless, it was very quick. Here’s the final product (click to see it in full size):&lt;/p&gt;
+
+&lt;div id=&quot;attachment_376&quot; style=&quot;width: 1034px&quot; class=&quot;wp-caption alignnone&quot;&gt;
+  &lt;a href=&quot;/assets/uploads/2012/09/Christopher_Su-panorama-Edit.jpg&quot;&gt;&lt;img class=&quot;size-large wp-image-376&quot; title=&quot;Yunnan Panorama&quot; src=&quot;/assets/uploads/2012/09/Christopher_Su-panorama-Edit-1024x144.jpg&quot; alt=&quot;&quot; width=&quot;1024&quot; height=&quot;144&quot; /&gt;&lt;/a&gt;&lt;p class=&quot;wp-caption-text&quot;&gt;
+    &lt;em&gt;The view from a mountain in Yunnan, China.&lt;/em&gt;
+  &lt;/p&gt;
+&lt;/div&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Photos from Yunnan</title>
+   <link href="http://christopher.su//2012/photographs-yunnan/"/>
+   <updated>2012-09-30T00:00:00+00:00</updated>
+   <id>http://christopher.su/2012/photographs-yunnan</id>
+   <content type="html">&lt;p&gt;On Thursday, I returned from a weeklong trip to Yunnan. While there, I (in addition to getting very sick) took a few photographs with my Canon 550D and Canon EF 50mm ƒ/1.2&lt;span style=&quot;color: #ff0000;&quot;&gt;L&lt;/span&gt;:&lt;/p&gt;
+
+&lt;div id=&quot;gallery-1&quot; class=&quot;gallery galleryid-337 gallery-columns-5 gallery-size-thumbnail&quot;&gt;
+  &lt;dl class=&quot;gallery-item&quot;&gt;
+    &lt;dt class=&quot;gallery-icon portrait&quot;&gt;
+      &lt;a href=&quot;/assets/uploads/2012/09/Christopher_Su-IMG_1085-Edit.jpg&quot;&gt;&lt;img width=&quot;150&quot; height=&quot;150&quot; src=&quot;/assets/uploads/2012/09/Christopher_Su-IMG_1085-Edit-150x150.jpg&quot; class=&quot;attachment-thumbnail&quot; alt=&quot;Christopher_Su-IMG_1085-Edit&quot; /&gt;&lt;/a&gt;
+    &lt;/dt&gt;
+  &lt;/dl&gt;
+  
+  &lt;dl class=&quot;gallery-item&quot;&gt;
+    &lt;dt class=&quot;gallery-icon landscape&quot;&gt;
+      &lt;a href=&quot;/assets/uploads/2012/09/Christopher_Su-IMG_1196-Edit.jpg&quot;&gt;&lt;img width=&quot;150&quot; height=&quot;150&quot; src=&quot;/assets/uploads/2012/09/Christopher_Su-IMG_1196-Edit-150x150.jpg&quot; class=&quot;attachment-thumbnail&quot; alt=&quot;Christopher_Su-IMG_1196-Edit&quot; /&gt;&lt;/a&gt;
+    &lt;/dt&gt;
+  &lt;/dl&gt;
+  
+  &lt;dl class=&quot;gallery-item&quot;&gt;
+    &lt;dt class=&quot;gallery-icon landscape&quot;&gt;
+      &lt;a href=&quot;/assets/uploads/2012/09/Christopher_Su-IMG_1036-Edit.jpg&quot;&gt;&lt;img width=&quot;150&quot; height=&quot;150&quot; src=&quot;/assets/uploads/2012/09/Christopher_Su-IMG_1036-Edit-150x150.jpg&quot; class=&quot;attachment-thumbnail&quot; alt=&quot;Christopher_Su-IMG_1036-Edit&quot; /&gt;&lt;/a&gt;
+    &lt;/dt&gt;
+  &lt;/dl&gt;
+  
+  &lt;dl class=&quot;gallery-item&quot;&gt;
+    &lt;dt class=&quot;gallery-icon landscape&quot;&gt;
+      &lt;a href=&quot;/assets/uploads/2012/09/IMG_1108.jpg&quot;&gt;&lt;img width=&quot;150&quot; height=&quot;150&quot; src=&quot;/assets/uploads/2012/09/IMG_1108-150x150.jpg&quot; class=&quot;attachment-thumbnail&quot; alt=&quot;Christopher_Su-IMG_1108-Edit&quot; /&gt;&lt;/a&gt;
+    &lt;/dt&gt;
+  &lt;/dl&gt;
+  
+  &lt;dl class=&quot;gallery-item&quot;&gt;
+    &lt;dt class=&quot;gallery-icon landscape&quot;&gt;
+      &lt;a href=&quot;/assets/uploads/2012/09/Christopher_Su-IMG_0512-Edit.jpg&quot;&gt;&lt;img width=&quot;150&quot; height=&quot;150&quot; src=&quot;/assets/uploads/2012/09/Christopher_Su-IMG_0512-Edit-150x150.jpg&quot; class=&quot;attachment-thumbnail&quot; alt=&quot;Christopher_Su-IMG_0512-Edit&quot; /&gt;&lt;/a&gt;
+    &lt;/dt&gt;
+  &lt;/dl&gt;
+  
+  &lt;br style=&quot;clear: both&quot; /&gt;&lt;dl class=&quot;gallery-item&quot;&gt;
+    &lt;dt class=&quot;gallery-icon landscape&quot;&gt;
+      &lt;a href=&quot;/assets/uploads/2012/09/Christopher_Su-IMG_1173.jpg&quot;&gt;&lt;img width=&quot;150&quot; height=&quot;150&quot; src=&quot;/assets/uploads/2012/09/Christopher_Su-IMG_1173-150x150.jpg&quot; class=&quot;attachment-thumbnail&quot; alt=&quot;Christopher_Su-IMG_1173&quot; /&gt;&lt;/a&gt;
+    &lt;/dt&gt;
+  &lt;/dl&gt;
+  
+  &lt;dl class=&quot;gallery-item&quot;&gt;
+    &lt;dt class=&quot;gallery-icon landscape&quot;&gt;
+      &lt;a href=&quot;/assets/uploads/2012/09/Christopher_Su-IMG_1239-Edit.jpg&quot;&gt;&lt;img width=&quot;150&quot; height=&quot;150&quot; src=&quot;/assets/uploads/2012/09/Christopher_Su-IMG_1239-Edit-150x150.jpg&quot; class=&quot;attachment-thumbnail&quot; alt=&quot;Christopher_Su-IMG_1239-Edit&quot; /&gt;&lt;/a&gt;
+    &lt;/dt&gt;
+  &lt;/dl&gt;
+  
+  &lt;dl class=&quot;gallery-item&quot;&gt;
+    &lt;dt class=&quot;gallery-icon landscape&quot;&gt;
+      &lt;a href=&quot;/assets/uploads/2012/09/Christopher_Su-IMG_1079-Edit.jpg&quot;&gt;&lt;img width=&quot;150&quot; height=&quot;150&quot; src=&quot;/assets/uploads/2012/09/Christopher_Su-IMG_1079-Edit-150x150.jpg&quot; class=&quot;attachment-thumbnail&quot; alt=&quot;Christopher_Su-IMG_1079-Edit&quot; /&gt;&lt;/a&gt;
+    &lt;/dt&gt;
+  &lt;/dl&gt;
+  
+  &lt;dl class=&quot;gallery-item&quot;&gt;
+    &lt;dt class=&quot;gallery-icon landscape&quot;&gt;
+      &lt;a href=&quot;/assets/uploads/2012/09/Christopher_Su-IMG_0535-Edit.jpg&quot;&gt;&lt;img width=&quot;150&quot; height=&quot;150&quot; src=&quot;/assets/uploads/2012/09/Christopher_Su-IMG_0535-Edit-150x150.jpg&quot; class=&quot;attachment-thumbnail&quot; alt=&quot;Christopher_Su-IMG_0535-Edit&quot; /&gt;&lt;/a&gt;
+    &lt;/dt&gt;
+  &lt;/dl&gt;
+  
+  &lt;dl class=&quot;gallery-item&quot;&gt;
+    &lt;dt class=&quot;gallery-icon landscape&quot;&gt;
+      &lt;a href=&quot;/assets/uploads/2012/09/Christopher_Su-IMG_0720-Edit.jpg&quot;&gt;&lt;img width=&quot;150&quot; height=&quot;150&quot; src=&quot;/assets/uploads/2012/09/Christopher_Su-IMG_0720-Edit-150x150.jpg&quot; class=&quot;attachment-thumbnail&quot; alt=&quot;Christopher_Su-IMG_0720-Edit&quot; /&gt;&lt;/a&gt;
+    &lt;/dt&gt;
+  &lt;/dl&gt;
+  
+  &lt;br style=&quot;clear: both&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Click the thumbnails to see the images in a larger size. If you like these, you might also want to check out &lt;a href=&quot;http://www.flickr.com/photos/christophersu/&quot;&gt;my Flickr&lt;/a&gt;.&lt;/p&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Using Adobe Lightroom 4 on the Retina MacBook Pro</title>
+   <link href="http://christopher.su//2012/adobe-lightroom-4-retina-macbook-pro/"/>
+   <updated>2012-09-28T00:00:00+00:00</updated>
+   <id>http://christopher.su/2012/adobe-lightroom-4-retina-macbook-pro</id>
+   <content type="html">&lt;p&gt;Prior to getting my Retina MacBook Pro, I was a longtime Adobe Lightroom user. After getting my rMBP, I was faced with the decision between Aperture and Lightroom. Right now, Photoshop and Lightroom have not yet received their updates for Retina display yet, while Apple has “optimized” Aperture for use on their new display. I had used Aperture before, but I didn’t like the consolidated library, the way it cached previews, and its general sluggishness on my old Core 2 Duo 15-inch MacBook Pro. However, with the Retina MacBook Pro’s quad-core i7, Retina display, and flash storage, I felt that these problems would all be much less bothersome and the Retina optimization might be worth tolerating them. However, because I really needed to keep my photo library distributed among various external storage devices and even internal partitions, I decided to stick with Lightroom.&lt;/p&gt;
+
+&lt;p&gt;I was glad to see that Lightroom did have some form of Retina-compatibility. The images and thumbnails appear to be shown in Retina display, although I’m not sure how 1:1 it actually is. Compared to Quick Look in Finder, which displays images in 100% pixel for pixel Retina, photos in Lightroom look about the same, so I’m quite confident that Lightroom does utilize the Retina display. The colors look much better on the Retina display in comparison to the previous MacBook Pros. The difference is very noticeable. The navigation in Lightroom and the various text and form windows all appear in full Retina (unlike some other applications, like pre-Retina-update Microsoft Office).&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Review: PDFpenPro</title>
+   <link href="http://christopher.su//2012/review-pdfpenpro/"/>
+   <updated>2012-09-20T00:00:00+00:00</updated>
+   <id>http://christopher.su/2012/review-pdfpenpro</id>
+   <content type="html">&lt;p&gt;As conference manager of a Model United Nations conference, I’ve been using PDFpenPro by Smile Software on Mac to create interactive PDF forms. After using it for a month, I have come to conclude that this software is &lt;strong&gt;aboslutely unusable&lt;/strong&gt;, at least for making PDF forms. Apple’s Preview is better for filling out PDF forms, viewing PDFs, moving elements, highlighting text, and appending pages. Resizing, moving, and aligning elements in PDFpenPro is a painstaking and horrendous process. PDFpenPro is extremely glitchy, lags (even on my 2.6 GHz quad-core Intel i7), and lacks fundamental features.&lt;/p&gt;
+
+&lt;h3 id=&quot;reasons-why-pdfpenpro-is-terrible&quot;&gt;Reasons why PDFpenPro is terrible:&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;When resizing elements, it is not possible to make independent adjustments to height or width. There is only a diagonal control, which makes it nearly impossible to make textboxes of the same height but with different widths.&lt;/li&gt;
+  &lt;li&gt;When copying and pasting groups of elements, some elements are missing and not pasted.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;center&gt;
+&lt;div id=&quot;attachment_304&quot; style=&quot;width: 281px&quot; class=&quot;wp-caption alignnone&quot;&gt;
+  &lt;a href=&quot;/assets/uploads/2012/09/Screen-Shot-2012-09-20-at-12.14.37-PM.jpg&quot;&gt;&lt;img class=&quot;size-medium wp-image-304 &quot; style=&quot;border: 1px solid black;&quot; title=&quot;Screen Shot 2012-09-20 at 12.14.37 PM&quot; src=&quot;/assets/uploads/2012/09/Screen-Shot-2012-09-20-at-12.14.37-PM-271x300.jpg&quot; alt=&quot;&quot; width=&quot;271&quot; height=&quot;300&quot; /&gt;&lt;/a&gt;&lt;p class=&quot;wp-caption-text&quot;&gt;
+    &lt;em&gt;The column on the right was copied and pasted from the column on the left.&lt;/em&gt;
+  &lt;/p&gt;
+&lt;/div&gt;
+&lt;/center&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;When “correcting” or modifying text, fragments of the original text are visible underneath the “correction”.&lt;/li&gt;
+  &lt;li&gt;Tremendous amounts of lag when moving textboxes and other elements.&lt;/li&gt;
+  &lt;li&gt;Snapping to the grid doesn’t work. It simply does not snap to the grid. It seems to snap to arbitrary points in the document. It is inaccurate, unusable, and useless.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;center&gt;
+&lt;div&gt;
+  &lt;div id=&quot;attachment_306&quot; style=&quot;width: 310px&quot; class=&quot;wp-caption alignnone&quot;&gt;
+    &lt;a href=&quot;/assets/uploads/2012/09/Screen-Shot-2012-09-20-at-12.13.11-PM.jpg&quot;&gt;&lt;img class=&quot;size-medium wp-image-306 &quot; style=&quot;border: 1px solid black;&quot; title=&quot;Screen Shot 2012-09-20 at 12.13.11 PM&quot; src=&quot;/assets/uploads/2012/09/Screen-Shot-2012-09-20-at-12.13.11-PM-300x167.jpg&quot; alt=&quot;&quot; width=&quot;300&quot; height=&quot;167&quot; /&gt;&lt;/a&gt;&lt;p class=&quot;wp-caption-text&quot;&gt;
+      &lt;em&gt;The so-called &amp;#8220;snap to grid&amp;#8221; feature.&lt;/em&gt;
+    &lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/center&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Invisible elements (ex. textboxes without borders) are difficult to work with because their is no indication of their position or size when not selected (forces you to constantly select elements to find where they are).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;center&gt;
+&lt;div&gt;
+  &lt;div id=&quot;attachment_307&quot; style=&quot;width: 310px&quot; class=&quot;wp-caption alignnone&quot;&gt;
+    &lt;a href=&quot;/assets/uploads/2012/09/Screen-Shot-2012-09-20-at-10.38.25-AM.jpg&quot;&gt;&lt;img class=&quot;size-medium wp-image-307 &quot; style=&quot;border: 1px solid black;&quot; title=&quot;Screen Shot 2012-09-20 at 10.38.25 AM&quot; src=&quot;/assets/uploads/2012/09/Screen-Shot-2012-09-20-at-10.38.25-AM-300x201.jpg&quot; alt=&quot;&quot; width=&quot;300&quot; height=&quot;201&quot; /&gt;&lt;/a&gt;&lt;p class=&quot;wp-caption-text&quot;&gt;
+      &lt;em&gt;There&amp;#8217;s about 60 text boxes in this picture. Can you spot them? No, you can&amp;#8217;t.&lt;/em&gt;
+    &lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/center&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;When exporting a PDF with textboxes with borders, the borders appear or work in the exported document.&lt;/li&gt;
+  &lt;li&gt;It is impossible to edit the parameters of multiple elements of the same type at once using the inspector (you have to select each element individually and make the adjustments one by one).&lt;/li&gt;
+  &lt;li&gt;There is no quick or convenient way to configure groups of radio buttons: you have to modify/configure every radio button individually using the inspector.&lt;/li&gt;
+  &lt;li&gt;Miscellaenous glitches that make the software unusable: ex. an image from the top of my document randomly teleported into the area I was working in. I could not move or undo the change. I had to close the document to “undo” the changes. I lost lots of my work.&lt;/li&gt;
+  &lt;li&gt;It handles text terribly. Plain text pasted in doesn’t inherit the text style.&lt;/li&gt;
+  &lt;li&gt;It takes an oddly large amount of memory (RAM), especially when compared to similar applications (Preview).&lt;/li&gt;
+  &lt;li&gt;The grid seems to randomly become darker and lighter.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;center&gt;
+&lt;div id=&quot;attachment_302&quot; style=&quot;width: 364px&quot; class=&quot;wp-caption alignnone&quot;&gt;
+  &lt;a href=&quot;/assets/uploads/2012/09/Screen-Shot-2012-09-20-at-12.15.37-PM.jpg&quot;&gt;&lt;img class=&quot; wp-image-302   &quot; style=&quot;border: 1px solid black;&quot; title=&quot;Screen Shot 2012-09-20 at 12.15.37 PM&quot; src=&quot;/assets/uploads/2012/09/Screen-Shot-2012-09-20-at-12.15.37-PM.jpg&quot; alt=&quot;&quot; width=&quot;354&quot; height=&quot;343&quot; /&gt;&lt;/a&gt;&lt;p class=&quot;wp-caption-text&quot;&gt;
+    &lt;em&gt;Grid: &amp;#8220;I&amp;#8217;m going to become darker for no apparent reason!&amp;#8221;&lt;/em&gt;
+  &lt;/p&gt;
+&lt;/div&gt;
+&lt;/center&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;You may be thinking, “maybe there’s options or preferences somewhere that I haven’t found that solve these problems”. Nope:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;center&gt;
+&lt;div id=&quot;attachment_312&quot; style=&quot;width: 310px&quot; class=&quot;wp-caption alignnone&quot;&gt;
+  &lt;a href=&quot;/assets/uploads/2012/09/Screen-Shot-2012-09-20-at-12.46.31-PM.jpg&quot;&gt;&lt;img class=&quot;size-medium wp-image-312 &quot; style=&quot;border: 1px solid black;&quot; title=&quot;Screen Shot 2012-09-20 at 12.46.31 PM&quot; src=&quot;/assets/uploads/2012/09/Screen-Shot-2012-09-20-at-12.46.31-PM-300x192.jpg&quot; alt=&quot;&quot; width=&quot;300&quot; height=&quot;192&quot; /&gt;&lt;/a&gt;&lt;p class=&quot;wp-caption-text&quot;&gt;
+    &lt;a href=&quot;/assets/uploads/2012/09/Screen-Shot-2012-09-20-at-12.46.33-PM.jpg&quot;&gt;&lt;img class=&quot;size-medium wp-image-313&quot; style=&quot;border: 1px solid black;&quot; title=&quot;Screen Shot 2012-09-20 at 12.46.33 PM&quot; src=&quot;/assets/uploads/2012/09/Screen-Shot-2012-09-20-at-12.46.33-PM-128x300.jpg&quot; alt=&quot;&quot; width=&quot;128&quot; height=&quot;300&quot; /&gt;&lt;/a&gt; &lt;em&gt;Where is the option to show dotted borders or some indication of invisible or borderless elements?&lt;/em&gt;
+  &lt;/p&gt;
+&lt;/div&gt;
+&lt;/center&gt;
+
+&lt;h3 id=&quot;verdict&quot;&gt;Verdict&lt;/h3&gt;
+&lt;p&gt;PDFpenPro is currently being sold on the Mac App Store for $100 and has a rating of 3.5 stars. In my opinion, it isn’t even close to worth it. The reviews on the App Store are quite split: mostly 5 star and 1 star reviews. I’m guessing that the reviewers who rated it 5 stars are only using it to highlight or proof PDF documents, not to create them. SunLakePro writes that he uses it to “assemble multiple pages into a single PDF” (a fairly simple and fundamental feature, can be easily done in Apple’s Preview) and that PDFpenPro is “often frustrating” and “it often crashes and I [lose] my work”. Many reviewers write about losing their work. Todd Michaels sums it up pretty well with: &lt;strong&gt;“DO NOT BUY THIS”&lt;/strong&gt;.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Export School Specific Delegation Lists for MUN using SQL</title>
+   <link href="http://christopher.su//2012/export-school-specific-delegation-lists-mun-sql/"/>
+   <updated>2012-09-19T00:00:00+00:00</updated>
+   <id>http://christopher.su/2012/export-school-specific-delegation-lists-mun-sql</id>
+   <content type="html">&lt;p&gt;Some creative thinking lead to the process described below, which creates tables containing only the specific countries/delegations and committees for a school using a “master” Excel document containing all delegations from all schools for a Model United Nations conference. Another idea was to use Excel VBA code to only export rows that meet certain conditions to a Word document. I was more comfortable with SQL, so I came up with this method.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Create a delegation list in Excel with countries as rows and commmitees as columns.&lt;/li&gt;
+&lt;li&gt;Export delegation list from Excel into CSV format.&lt;/li&gt;
+&lt;li&gt;Create SQL database:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;CREATE TABLE `delegations` (
+  `Delegation` varchar(255) DEFAULT NULL,
+  `GA1` varchar(255) DEFAULT NULL,
+  `ECOSOC` varchar(255) DEFAULT NULL,
+  `GA3` varchar(255) DEFAULT NULL,
+  `GA4` varchar(255) DEFAULT NULL,
+  `SC` varchar(255) DEFAULT NULL,
+  `AP` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ol start=&quot;3&quot;&gt;
+  &lt;li&gt;
+    Import the CSV file into the SQL database, set the first line as the table columns if prompted.
+  &lt;/li&gt;
+  &lt;li&gt;
+    Use SQL queries to create specific sets of delegations to send to schools:
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;SELECT * FROM delegations
+WHERE GA1='CISS' OR ECOSOC='CISS' OR GA3='CISS' OR GA4='CISS' OR GA4='CISS' OR SC='CISS' OR AP='CISS'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ol start=&quot;5&quot;&gt;
+  &lt;li&gt;
+    Export sets into CSV, convert to XLS or Word or PDF to send to schools.
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;em&gt;#conferencemanaging #creativethinking&lt;/em&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Playing with WordPress: Categories, Tags, Simply Exclude, and Page Templates</title>
+   <link href="http://christopher.su//2012/playing-wordpress-categories-tags-simply-exclude-page-templates/"/>
+   <updated>2012-09-17T00:00:00+00:00</updated>
+   <id>http://christopher.su/2012/playing-wordpress-categories-tags-simply-exclude-page-templates</id>
+   <content type="html">&lt;h3 id=&quot;convert-categories-to-tags-and-vice-versa&quot;&gt;Convert Categories to Tags and Vice Versa&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Go to the WordPress dashboard&lt;/li&gt;
+  &lt;li&gt;Go to Tools &amp;gt; Import&lt;/li&gt;
+  &lt;li&gt;Choose the “Categories and Tags Converter”&lt;/li&gt;
+  &lt;li&gt;Install it through the prompt&lt;/li&gt;
+  &lt;li&gt;Select which categories you wish to convert to tags (or click at the top to switch to converting tags to categories) and confirm&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;exclude-categories-and-tags-from-the-home-page&quot;&gt;Exclude Categories and Tags from the Home Page&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Install the “Simply Exclude” plugin&lt;/li&gt;
+  &lt;li&gt;Set Home Page from the default “Include only” to “Exclude” in the “Simply Exclude” settings&lt;/li&gt;
+  &lt;li&gt;Go to the categories section of the WordPress dashboard&lt;/li&gt;
+  &lt;li&gt;Check the checkboxes next to which sections you would like to exclude from the home page&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Note: it is also possible to do this &lt;a href=&quot;http://wp-snippets.com/exclude-category-from-homepage/&quot;&gt;by editing the WordPress functions.php file&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;create-a-page-with-full-text-posts-from-one-category&quot;&gt;Create a Page with Full Text Posts from One Category&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Go to the WordPress dashboard, Appearance &amp;gt; Editor&lt;/li&gt;
+  &lt;li&gt;Open up your “loop.php” file, or the file that contains your while loop with &lt;code class=&quot;highlighter-rouge&quot;&gt;has_posts&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Copy that, and paste it into a new php file titled &lt;code class=&quot;highlighter-rouge&quot;&gt;name-of-your-page-template.php&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;After &lt;code class=&quot;highlighter-rouge&quot;&gt;get_header();&lt;/code&gt; add &lt;code class=&quot;highlighter-rouge&quot;&gt;query_posts('cat=13');&lt;/code&gt;, replace 13 with the ID of the category or categories you want&lt;/li&gt;
+  &lt;li&gt;Find the if-statement containing &lt;code class=&quot;highlighter-rouge&quot;&gt;is_search&lt;/code&gt; and replace &lt;code class=&quot;highlighter-rouge&quot;&gt;the_excerpt();&lt;/code&gt; with &lt;code class=&quot;highlighter-rouge&quot;&gt;the_content();&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Upload your php file into your theme directory&lt;/li&gt;
+  &lt;li&gt;Create a new page in WordPress, set it to the page template you just created, and publish it&lt;/li&gt;
+&lt;/ol&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Starting Out with the Yii PHP Framework</title>
+   <link href="http://christopher.su//2012/starting-yii-php-framework/"/>
+   <updated>2012-09-03T00:00:00+00:00</updated>
+   <id>http://christopher.su/2012/starting-yii-php-framework</id>
+   <content type="html">&lt;p&gt;Developers are quickly switching from older frameworks like CodeIgniter to Yii, which allows for quicker deployment of PHP web applications. Here are some steps to get started with Yii on Mac:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.yiiframework.com/download/&quot;&gt;Download&lt;/a&gt; the Yii framework.&lt;/li&gt;
+  &lt;li&gt;Unarchive the download, enter your command line of choice, and run chmod -R 755 on the directory to make the necessary files accessible and executable.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cd&lt;/code&gt; into the framework folder and run this command:&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ yiic webapp your/htdocs/location
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;Now you’ve created a “skeleton” for your web application. Start up your Apache server, if you haven’t already, and open the webpage that you chose before. Ex: &lt;code class=&quot;highlighter-rouge&quot;&gt;http://localhost/your/location/index.php&lt;/code&gt;.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;You should see the Yii welcome page. Now open &lt;code class=&quot;highlighter-rouge&quot;&gt;your/location/protected/config/main.php&lt;/code&gt; in your text editor and add this to the configuration:&lt;/p&gt;
+
+        &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;return array(
+    ......
+    'import'=&amp;gt;array(
+        'application.models.&amp;lt;em&amp;gt;',
+        'application.components.&amp;lt;/em&amp;gt;',
+    ),
+        
+    'modules'=&amp;gt;array(
+        'gii'=&amp;gt;array(
+            'class'=&amp;gt;'system.gii.GiiModule',
+            'password'=&amp;gt;'enter-a-password-here',
+        ),
+    ),
+);
+&lt;/code&gt;&lt;/pre&gt;
+        &lt;/div&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;Point your web browser to &lt;code class=&quot;highlighter-rouge&quot;&gt;http://localhost/your/location/index.php?r=gii&lt;/code&gt; and open the Model Generator.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;Use Yii to generate code for a model with the Table Name &lt;code class=&quot;highlighter-rouge&quot;&gt;tbl_user&lt;/code&gt; and the Model Class &lt;code class=&quot;highlighter-rouge&quot;&gt;User&lt;/code&gt;.&lt;/li&gt;
+      &lt;li&gt;In the sidebar, select the CRUD Generator to generate code to implement CRUD operations. Create code for the Model Class &lt;code class=&quot;highlighter-rouge&quot;&gt;User&lt;/code&gt; and the Controller ID &lt;code class=&quot;highlighter-rouge&quot;&gt;user&lt;/code&gt;. Once again preview and generate the code.&lt;/li&gt;
+      &lt;li&gt;Now, if you open &lt;code class=&quot;highlighter-rouge&quot;&gt;http://localhost/your/location/index.php?r=user&lt;/code&gt; in your web browser, you should see a list of all the entries in the default &lt;code class=&quot;highlighter-rouge&quot;&gt;tbl_user&lt;/code&gt; database table.&lt;/li&gt;
+      &lt;li&gt;Go to &lt;code class=&quot;highlighter-rouge&quot;&gt;http://localhost/your/location/index.php?r=user/admin&lt;/code&gt; (the admin function of the user class) and log in using the gii password you choose earlier (in the main configuration file). From here, you can perform the various CRUD operations such as listing, editing, and creating entries in the database.&amp;lt;/ol&amp;gt; 
+Yii allows for the quick development of PHP applications by simplifying processes such as writing code to perform CRUD operations by generating the code for you.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Migrating iOS Certificates and Profiles</title>
+   <link href="http://christopher.su//2012/migrating-ios-certificates-profiles/"/>
+   <updated>2012-09-01T00:00:00+00:00</updated>
+   <id>http://christopher.su/2012/migrating-ios-certificates-profiles</id>
+   <content type="html">&lt;p&gt;Moving iOS developer and distribution certificates and provisioning profiles from one computer to another is a simple process, but it may end up being a real pain if done incorrectly.&lt;/p&gt;
+
+&lt;h3 id=&quot;exporting-certificates-from-keychain&quot;&gt;Exporting Certificates from Keychain&lt;/h3&gt;
+
+&lt;p&gt;Follow these steps on your old computer to export your certificates:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Open Keychain Access.&lt;/li&gt;
+  &lt;li&gt;Right click on your developer certificate.&lt;/li&gt;
+  &lt;li&gt;Select “Export”, choose the &lt;code class=&quot;highlighter-rouge&quot;&gt;Personal Information Exchange (.p12)&lt;/code&gt; format, set a password, and choose a location to export your certificates to.&lt;/li&gt;
+  &lt;li&gt;Repeat steps two and three for your distribution profile.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Don’t worry about moving provisioning profiles for now, Xcode 4 has some handy feature to help with that.&lt;/p&gt;
+
+&lt;h3 id=&quot;importing-certificates&quot;&gt;Importing Certificates&lt;/h3&gt;
+
+&lt;p&gt;On your new computer, ensure you set up your system and Xcode with your developer Apple ID.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Open Keychain access and go to File, Import and select your exported certificates.&lt;/li&gt;
+  &lt;li&gt;Enter the password you set earlier to import your certificates. This may take some time.&lt;/li&gt;
+  &lt;li&gt;Open Xcode after importing your certificates and open the organizer (Command+Shift+2).&lt;/li&gt;
+  &lt;li&gt;Check that your Teams and their respective certificates appear in the organizer’s sidebar.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;importing-provisioning-profiles&quot;&gt;Importing Provisioning Profiles&lt;/h3&gt;
+
+&lt;p&gt;This is the easiest part. After you’ve confirmed that your certificates are seen by Xcode, simply go to the Provisioning Profiles tab in the organizer sidebar, press the glorious refresh button in the bottom right corner, enter your Apple ID credentials, and wait for Xcode to sync up your profiles.&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;alignnone size-full wp-image-218&quot; title=&quot;Xcode Organizer Refresh Provisioning Profiles&quot; src=&quot;/assets/uploads/2012/09/Screen-Shot-2012-09-01-at-8.18.50-PM-e1346502764538.jpg&quot; alt=&quot;Xcode Organizer Refresh Provisioning Profiles&quot; /&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Importing Plain Text Files into Day One with Date Created</title>
+   <link href="http://christopher.su//2012/importing-plain-text-files-day-date-created/"/>
+   <updated>2012-09-01T00:00:00+00:00</updated>
+   <id>http://christopher.su/2012/importing-plain-text-files-day-date-created</id>
+   <content type="html">&lt;p&gt;Prior to using Day One, I used nvALT coupled with iA Writer and other various Markdown editors to organize my notes. After deciding I wanted some more organization, security, syncing, and other features, I took the leap and switched to Day One. Importing all of my plain text files into Day One was rather annoying. Here are the steps I had to take (I also created &lt;a href=&quot;https://github.com/christophersu/txt-to-dayone&quot;&gt;a project on GitHub&lt;/a&gt; for anyone who’s interested in the exact code I used):&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Copy all of my notes into a new folder (extra precaution, didn’t want to mess with the originals, this later proved to be a good idea).&lt;/li&gt;
+  &lt;li&gt;Make an &lt;a href=&quot;https://github.com/christophersu/txt-to-dayone/tree/master/cleanmarkdown.workflow&quot;&gt;Automator workflow&lt;/a&gt; to run a TextSoap cleaner on all files in a directory.&lt;/li&gt;
+  &lt;li&gt;Write a TextSoap cleaner to convert my dailies markdown (iA Writer allowed for sloppier Markdown) to Day One markdown (this was a lot of trial and error as I would constantly find new things that needed to be changed).&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Create &lt;a href=&quot;https://github.com/christophersu/txt-to-dayone/blob/master/creationdater.sh&quot;&gt;a shell script to change the timestamps&lt;/a&gt; on the new files back to the original timestamps (when you copy the files, they retain their original creation date, but after running the TextSoap cleaner, it changes to today).&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Create &lt;a href=&quot;https://github.com/christophersu/txt-to-dayone/blob/master/import.sh&quot;&gt;a shell script to import them all into Day One&lt;/a&gt; via the Day One command line interface.&lt;/li&gt;
+&lt;/ol&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Acquiring Past Growl Notifications in Shell</title>
+   <link href="http://christopher.su//2012/acquiring-growl-notifications-shell/"/>
+   <updated>2012-09-01T00:00:00+00:00</updated>
+   <id>http://christopher.su/2012/acquiring-growl-notifications-shell</id>
+   <content type="html">&lt;p&gt;As of version 1.3, Growl stores recent notifications in its history. Should you ever need to access these entries via shell script (ex. checking every once and a while using a cronjob to performs certain tasks should a certain growl notification appear), it is quite easy to access this history.&lt;/p&gt;
+
+&lt;p&gt;Growl’s history is stored in an SQLite database in its application support folder: &lt;code class=&quot;highlighter-rouge&quot;&gt;/Users/christophersu/Library/Application Support/Growl/notifications.history&lt;/code&gt;. The entries can be easily read from this database in shell using &lt;code class=&quot;highlighter-rouge&quot;&gt;sqlite3&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Depending on what part of the notification you want (each one has a title and body), you may want to request more information by adding more behind &lt;code class=&quot;highlighter-rouge&quot;&gt;ZTITLE&lt;/code&gt; in &lt;code class=&quot;highlighter-rouge&quot;&gt;SELECT ZTITLE FROM ZNOTIFICATION&lt;/code&gt;. I didn’t want all of the entries in the database, but if you do, you can remove the &lt;code class=&quot;highlighter-rouge&quot;&gt;tail -5&lt;/code&gt; at the end, or alter its parameters to meet your needs. You can also use other SQL commands, such as &lt;code class=&quot;highlighter-rouge&quot;&gt;WHERE&lt;/code&gt; if you only want entries in the database that meet specific requirements (although I prefer to filter them out in shell).&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Dropbox on Linux</title>
+   <link href="http://christopher.su//2012/dropbox-linux/"/>
+   <updated>2012-08-31T00:00:00+00:00</updated>
+   <id>http://christopher.su/2012/dropbox-linux</id>
+   <content type="html">&lt;p&gt;Should you ever need to another way to store and save files from your server besides, downloading them directly (ex. your internet is too slow), you can send them to Dropbox.&lt;/p&gt;
+
+&lt;h3 id=&quot;installing-dropbox&quot;&gt;Installing Dropbox&lt;/h3&gt;
+
+&lt;p&gt;This part is quite simple. Enter your user home directory, download, and unarchive Dropbox for Linux:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd ~
+wget -O dropbox.tar.gz &quot;http://www.dropbox.com/download/?plat=lnx.x86&quot;
+tar -tzf dropbox.tar.gz     
+tar -xvzf dropbox.tar.gz
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This should create a folder titled &lt;code class=&quot;highlighter-rouge&quot;&gt;.dropbox_dist&lt;/code&gt; in your home directory. This is for Dropbox for Linux itself lives, but your files will be stored in &lt;code class=&quot;highlighter-rouge&quot;&gt;~/Dropbox&lt;/code&gt; (so don’t worry or move it!).&lt;/p&gt;
+
+&lt;h3 id=&quot;setting-up-dropbox&quot;&gt;Setting up Dropbox&lt;/h3&gt;
+
+&lt;p&gt;Open up the Dropbox client with this:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;~/.dropbox-dist/dropboxd
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This will give you a link and some instructions to follow. Open the link provided to link your server as “computer” on your Dropbox account. After linking your account, close the client by pressing control+C.&lt;/p&gt;
+
+&lt;h3 id=&quot;sending-files-to-dropbox&quot;&gt;Sending Files to Dropbox&lt;/h3&gt;
+
+&lt;p&gt;Move files you want to backup or send to dropbox by using the &lt;code class=&quot;highlighter-rouge&quot;&gt;mv&lt;/code&gt; command to move them to &lt;code class=&quot;highlighter-rouge&quot;&gt;~/Dropbox&lt;/code&gt;. I sometimes send &lt;a href=&quot;/2012/encrypt-archives-gpg-openssl/&quot;&gt;encrypted archives&lt;/a&gt; and MySQL dumps to Dropbox for backup purposes.&lt;/p&gt;
+
+&lt;p&gt;After moving your files, open Dropbox and keep it open in the background using this:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;~/.dropbox-dist/dropboxd &amp;amp;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;It will automatically begin syncing your &lt;code class=&quot;highlighter-rouge&quot;&gt;~/Dropbox&lt;/code&gt; folder with your account. I have noticed that dropboxd takes up quite a bit of processing power though. I suspect it’s indexing and checking which files were updated and need to be uploaded or updated.&lt;/p&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Encrypt Archives with gpg and OpenSSL</title>
+   <link href="http://christopher.su//2012/encrypt-archives-gpg-openssl/"/>
+   <updated>2012-08-28T00:00:00+00:00</updated>
+   <id>http://christopher.su/2012/encrypt-archives-gpg-openssl</id>
+   <content type="html">&lt;p&gt;Encrypting archives is particularly useful when backing up large amounts of data or sending sensitive files. There are a variety of ways to encrypt archives.&lt;/p&gt;
+
+&lt;h3 id=&quot;quick-and-easy-gpg&quot;&gt;Quick and Easy: gpg&lt;/h3&gt;
+
+&lt;p&gt;To archive and encrypt a directory using gpg, run this command:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tar -cz your_dir | gpg -c -o your_archive.tgz.gpg
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;To unarchive it later, use this:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gpg -d your_archive.tgz.gpg | tar xz
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;encrypting-with-keys-openssl&quot;&gt;Encrypting with Keys: openssl&lt;/h3&gt;
+
+&lt;p&gt;First, create your keys. You only need to do this once, and with all subsequent archives, you can may just use the keys you created previously:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;openssl genrsa -out key.pem 2048
+openssl rsa -in key.pem -out key-public.pem -outform PEM -pubout
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now archive the directory or files you wish to encrypt and then save a passphrase into a file:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo -n &quot;your passphrase here&quot; &amp;gt; key.txt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Use openssl to encrypt to encrypt your newly created archive using the file you just created:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;openssl enc -aes-256-cbc -pass file:key.txt &amp;lt; UNENCRYPTED_FILE &amp;gt; encrypted.dat
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Encrypt your passphrase using the public key you created in the beginning:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;openssl rsautl -encrypt -pubin -inkey key-public.pem &amp;lt; key.txt &amp;gt; enc.key.txt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Save &lt;code class=&quot;highlighter-rouge&quot;&gt;encrypted.dat&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;enc.key.txt&lt;/code&gt; in a safe and accessible place. You will need them to decrypt the archive.&lt;/p&gt;
+
+&lt;p&gt;In order to decrypt the archive, first decrypt your passkey text file using your private key:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;openssl rsautl -decrypt -inkey key.pem &amp;lt; enc.key.txt &amp;gt; key.txt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Decrypy the file after decrypting your passkey file:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;openssl enc -aes-256-cbc -d -pass file:key.txt &amp;lt; encrypted.dat &amp;gt; UNENCRYPTED_FILE
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Using openssl is far more complicated, but it is more reliable and supported compared to gpg.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Creating Mac Applications from Shell Scripts</title>
+   <link href="http://christopher.su//2012/creating-mac-applications-shell-scripts/"/>
+   <updated>2012-08-28T00:00:00+00:00</updated>
+   <id>http://christopher.su/2012/creating-mac-applications-shell-scripts</id>
+   <content type="html">&lt;p&gt;In the past, I’ve used a variety of methods to turn shell scripts into native applications. Each method has its own pros and cons, which I will attempt to explain in this post.&lt;/p&gt;
+
+&lt;h3 id=&quot;platypus&quot;&gt;&lt;a href=&quot;http://sveinbjorn.org/platypus&quot;&gt;Platypus&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Playpus used to be the “go to” solution for packaging shell scripts as native applications. It supports a wide variety of scripts, including shell, Perl, Python and PHP. Platypus is very old, and surprisingly, is still being maintained and developed. Platypus also has a command line tool which allows the automation of the script to application process and also makes it comparable to Appify.&lt;/p&gt;
+
+&lt;h3 id=&quot;appify&quot;&gt;&lt;a href=&quot;https://gist.github.com/674099&quot;&gt;Appify&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Appify is a relatively new solution for those who are looking to convert shell scripts into applications. All of the work done by Appify appears to take place in under 15 lines of shell code (it is a shell script itself). It was created by Thomas Alyott of Subtle Gradient and the version linked above was modified by &lt;a href=&quot;http://mathiasbynens.be/notes/shell-script-mac-apps&quot;&gt;Mathias Bynens&lt;/a&gt;. Appify is extremely simple, lightweight, quick, and easy to use. All that is needed to be done in order to create an application from a shellscript is the following:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ appify your-shell-script.sh &quot;Your App Name&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;clickable-shell-scripts-in-finder&quot;&gt;Clickable Shell Scripts in Finder&lt;/h3&gt;
+
+&lt;p&gt;If you aren’t looking to distribute your shell script as an application and only want a way to quickly execute a shellscript by clicking on it, there is &lt;a href=&quot;http://hints.macworld.com/article.php?story=20030728055235121&quot;&gt;another solution&lt;/a&gt; which involves SetFile. However, there are multiple downsides to this: the script isn’t distributable, anyone who you send the script to will have to run the command as well in order to make it clickable. This method also requires Apple Developer Tools, so a large majority of Mac users out there won’t be able to use it. To create a clickable shell script, run this through your command line:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;SetFile -t APPL name-of-script.sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;manually-creating-the-executable&quot;&gt;Manually Creating the Executable&lt;/h3&gt;
+
+&lt;p&gt;This is essentially what Appify does when you feed it a shell script, but you can do it all manually in Terminal:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mkdir -p name-you-want.app/Contents/MacOS
+mv mame-of-script.sh name-you-want.app/Contents/MacOS/foo
+chmod +x name-you-want.app/Contents/MacOS/foo
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;There are several ways to convert shell scripts into applications. Platypus offers the most custimization and options in a GUI, Appify is the quickest way to create one from the command line, and SetFile is a good solution for your own personal use (not intending to distribute).&lt;/p&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Singularity: A CMS in a Single PHP File</title>
+   <link href="http://christopher.su//2012/singularity-cms-single-php-file/"/>
+   <updated>2012-08-27T00:00:00+00:00</updated>
+   <id>http://christopher.su/2012/singularity-cms-single-php-file</id>
+   <content type="html">&lt;p&gt;&lt;a href=&quot;https://github.com/csu/singularity-cms/zipball/master&quot;&gt;&lt;img class=&quot;alignnone  wp-image-401&quot; title=&quot;Singularity CMS&quot; src=&quot;/assets/uploads/2012/08/singularity-1024x170.jpg&quot; alt=&quot;Download Singularity CMS (zip)&quot; width=&quot;645&quot; height=&quot;107&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;I’ve more or less finished the first version (v1.0) of my first open-source, PHP side project. It’s called &lt;a href=&quot;https://github.com/csu/singularity-cms&quot;&gt;Singularity&lt;/a&gt; and it’s a flatfile CMS that processes MultiMarkdown contained &lt;strong&gt;in a single PHP file&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;It uses &lt;a href=&quot;http://strapdownjs.com/&quot;&gt;strapdown.js&lt;/a&gt; to process Markdown fed to it by PHP. All of the URL magic is done with an Apache .htaccess file and PHP. It is capable of handling any file type, and I included a variety of preferences, including filetype, to allow for more convenient adaptation and implementation:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;define('CONTENT_DIR', ROOT_DIR .'content/'); //change this to change which folder you want your content to be stored in $bootswatch_theme = &quot;cerulean&quot;; //choose any bootstrap theme included in strapdown.js! $file_format = &quot;.txt&quot;; //change this to choose a file type, be sure to include the period 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;It’s an extremely simple solution for those who are looking to easily turn Markdown files into a website.&lt;/p&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>System Tweaks For a Better Mac Experience</title>
+   <link href="http://christopher.su//2012/system-tweaks-mac-experience/"/>
+   <updated>2012-08-26T00:00:00+00:00</updated>
+   <id>http://christopher.su/2012/system-tweaks-mac-experience</id>
+   <content type="html">&lt;p&gt;Apply these tweaks by running the corresponding commands in Terminal (found at &lt;code class=&quot;highlighter-rouge&quot;&gt;/Applications/Utilities/Terminal.app&lt;/code&gt;).&lt;/p&gt;
+
+&lt;h3 id=&quot;disable-dock-autoshow-delay&quot;&gt;Disable Dock Autoshow Delay&lt;/h3&gt;
+
+&lt;p&gt;I hide my dock to maximize the usable area of my screen. By default, there’s a short delay on the autoshowing dock animation. This removes the delay:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;defaults write com.apple.Dock autohide-delay -float 0 &amp;amp;&amp;amp; killall Dock 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;show-the-library-folder-in-finder-lion-and-later&quot;&gt;Show the Library Folder in Finder (Lion and later)&lt;/h3&gt;
+
+&lt;p&gt;In Lion and Mountain Lion, the Library folder is hidden from view. This will make it appear in your home folder again:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;chflags nohidden ~/Library/ 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;expanded-save-dialog-boxes-by-default&quot;&gt;Expanded Save Dialog Boxes by Default&lt;/h3&gt;
+
+&lt;p&gt;Having to press the little triangle to navigate through your filesystem everytime you save something is annoying. This makes save dialogs expanded by default:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;defaults write -g NSNavPanelExpandedStateForSaveMode -boolean true 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;screenshot-location&quot;&gt;Screenshot Location&lt;/h3&gt;
+
+&lt;p&gt;I like to keep all of my screenshots, and I like to keep them in a secure location. The easiest way I found to do this was to create an encrypted sparseimage, mount it, and then change the screenshot location to that volume:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;defaults write com.apple.screencapture location /Volumes/Screenshots
+killall SystemUIServer 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;screenshot-format&quot;&gt;Screenshot Format&lt;/h3&gt;
+
+&lt;p&gt;Because I never delete my screenshots, I opted to take them in the JPG format, rather than in PNG as screenshots don’t have much transparency/alpha to them and there isn’t a need for higher quality. Run this through terminal to change the file format for screenshots to JPG:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;defaults write com.apple.screencapture type jpg 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Once again, killall SystemUIServer to apply changes. Other formats that work with this command are tiff and pdf.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Edit:&lt;/strong&gt; Andy Lester points out in the comments that JPG screenshots are significantly lower in quality than those in the default PNG format. Specifically, he mentions problems with smearing between two colors where they meet and grey hazes around text.&lt;/p&gt;
+
+&lt;h3 id=&quot;show-hidden-files-in-finder&quot;&gt;Show Hidden Files in Finder&lt;/h3&gt;
+
+&lt;p&gt;Working with .htaccess, .gitignore, and other hidden files is a pain with hidden files in Finder. Show hidden files using this:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;defaults write com.apple.finder AppleShowAllFiles TRUE
+killall Finder 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;disable-dashboard&quot;&gt;Disable Dashboard&lt;/h3&gt;
+
+&lt;p&gt;Dashboard widgets are beginning to be replaced by web applications and menubar applications. Dashboard takes up system resources you could be using elsewhere.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;defaults write com.apple.dashboard mcx-disabled -boolean YES
+killall Dock 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;remove-itunes-store-links-in-library&quot;&gt;Remove iTunes Store Links in Library&lt;/h3&gt;
+
+&lt;p&gt;By default, a little arrow appears next to each song in the iTunes library linking to the iTunes Store. This will give the arrow some actual useful functionality by having it point to other albums in the iTunes library:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;defaults write com.apple.iTunes invertStoreLinks -bool YES 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;git-ignore-all-ds_store-files&quot;&gt;Git Ignore all .DS_Store files&lt;/h3&gt;
+
+&lt;p&gt;Rather than creating an individual .gitignore file for each of your git projects to ignore .DS_Store files, you may simply ignore them globally using this:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git config --global core.excludesfile ~/.gitignore
+echo .DS_Store &amp;gt;&amp;gt; ~/.gitignore 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;dim-icons-of-hidden-applications-in-the-dock&quot;&gt;Dim Icons of Hidden Applications in the Dock&lt;/h3&gt;
+
+&lt;p&gt;This will have the dock indicate which applications you have hidden by dimming and making transparent icons in the dock:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;defaults write com.apple.Dock showhidden -bool YES
+killall Dock 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;hide-desktop-items&quot;&gt;Hide Desktop Items&lt;/h3&gt;
+
+&lt;p&gt;This will hide all icons and items on your desktop. If you’re one of those people who prefers a clean desktop and uses Finder windows exclusively for file management, then give this a go:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;defaults write com.apple.finder CreateDesktop -bool false 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;sync-files-in-any-location-with-dropbox&quot;&gt;Sync Files in Any Location with Dropbox&lt;/h3&gt;
+
+&lt;s&gt;This uses symbolic linking (sort of like an alias or shortcut) to get Dropbox to sync folders and items that are not actually in your Dropbox folder.&lt;/s&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ln -s /Users/you/path-to-file-or-folder /Users/you/Dropbox 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Be sure to change the “you” to your username and the latter path if you chose a custom Dropbox folder location.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Edit:&lt;/strong&gt; As Egypt Urnash points out in the comments, Dropbox will follow normal Mac aliases. There is no need to create symbolic links.&lt;/p&gt;
+
+&lt;h3 id=&quot;disable-crash-dialogs&quot;&gt;Disable Crash Dialogs&lt;/h3&gt;
+
+&lt;p&gt;This will stop the little dialog windows that appear everytime an application crashes or you force quit an app:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;defaults write com.apple.CrashReporter DialogType none 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;delete-archives-after-extracting&quot;&gt;Delete Archives after Extracting&lt;/h3&gt;
+
+&lt;p&gt;Open &lt;code class=&quot;highlighter-rouge&quot;&gt;/System/Library/CoreServices/Archive Utility.app&lt;/code&gt;, go to Preferences, and choose to delete archives after extracting or expanding them.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/uploads/2012/08/Screen-Shot-2012-08-26-at-1.29.40-PM-e1345959461888.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;skip-disk-image-verification&quot;&gt;Skip Disk Image Verification&lt;/h3&gt;
+
+&lt;p&gt;If you install new software often or mount disk images often, you can save some time by skipping the image verification process by running this:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;defaults write com.apple.frameworks.diskimages skip-verify TRUE 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;disable-window-shadows-in-screenshots&quot;&gt;Disable Window Shadows in Screenshots&lt;/h3&gt;
+
+&lt;p&gt;The drop shadows of windows makes screenshots larger than they need to be. Run this to not include them in screenshots:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;defaults write com.apple.screencapture disable-shadow -bool true
+killall SystemUIServer 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;reverting-back-to-default&quot;&gt;Reverting Back to Default&lt;/h2&gt;
+
+&lt;p&gt;To undo most of these changes, replace “defaults write” with “defaults delete” to revert to the default setting. Alternatively, simply replace “true” with “false”, “0″ with “1″, or “yes” with “no” and vice versa.&lt;/p&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Svbtle Clones and Playing with WordPress Svbtle</title>
+   <link href="http://christopher.su//2012/svbtle-clones-playing-wordpress-svbtle/"/>
+   <updated>2012-08-26T00:00:00+00:00</updated>
+   <id>http://christopher.su/2012/svbtle-clones-playing-wordpress-svbtle</id>
+   <content type="html">&lt;p&gt;Ever since &lt;a href=&quot;http://dcurt.is/&quot;&gt;Dustin Curtis&lt;/a&gt; shared his &lt;a href=&quot;https://svbtle.com/&quot;&gt;Svbtle&lt;/a&gt; platform with the world, I&amp;#8217;ve been fairly interested in finding a similar system. Thus far, I&amp;#8217;ve found three different &amp;#8220;clones&amp;#8221; of Svbtle, one of which I&amp;#8217;m using on this blog.&lt;/p&gt;
+&lt;h3&gt;WordPress Svbtle (wp-svbtle)&lt;/h3&gt;
+&lt;p&gt;This Svbtle clone, created by &lt;a href=&quot;http://gravityonmars.com/&quot;&gt;Gravity on Mars&lt;/a&gt; takes of the form of a WordPress theme and alternate content editor written in PHP.&lt;/p&gt;
+&lt;h3&gt;&lt;a href=&quot;http://natewienert.com/codename-obtvse&quot;&gt;Obtvse&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Obtvse was created by Nate Wienert, who even copied the &amp;#8220;Codename&amp;#8221; titled used by Curtis. Wienert presents some interesting points in Obtvse&amp;#8217;s introductory post. He does a good job of explaining Curtis controversial decision to keep Svbtle an exclusive network and a closed platform:&lt;/p&gt;
+&lt;blockquote&gt;&lt;p&gt;I wrote this engine entirely for myself, without the intention of opening it up to other people. But since realizing that it has improved the way I think and write, I&amp;#8217;ve decided to open it up to a small number of vetted bloggers. — Dustin Curtis&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;Obtvse is written for Ruby on Rails, so if you&amp;#8217;re more of a PHP person, stick with WP-Svbtle.&lt;/p&gt;
+&lt;h3&gt;&lt;a href=&quot;https://github.com/bmelton/Orbvt&quot;&gt;Orbvt&lt;/a&gt;&lt;/h3&gt;
+&lt;blockquote&gt;&lt;p&gt;Orbvt is a Svbtle clone written in written on the Meteor Application Framework.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;I&amp;#8217;ve never used the Meteor platform before, but it is open source and it is pure JavaScript, so it seems friendly enough. Looking at the demo, it doesn&amp;#8217;t appear to resemble Svbtle as much as WP-Svbtle and Obtvse do, but the general design is still the same, with the simplistic sidebar on the left and date at the top.&lt;/p&gt;
+&lt;h3&gt;&lt;a href=&quot;https://github.com/christophersu/wp-svbtle-cs&quot;&gt;Modifying WordPress Svbtle&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;I found that most of the modifications I needed to make to wp-svbtle were in the header.php file. I removed most of the default sidebar code, opting to use a link widget with a specific link category to better manage my sidebar links. By default, WordPress Svbtle automatically includes every page on your WordPress site in the sidebar, which is fairly annoying. This is easily remedied by deleting the appropriate code in the header.php file.&lt;/p&gt;
+&lt;p&gt;Somewhat oddly, the preferences for the icon/logo don&amp;#8217;t appear on the Svbtle options dashboard page, but rather on the Header options page.&lt;/p&gt;
+&lt;p&gt;Another area that could use some modification: the HTML title attribute. By default Svbtle handles this attribute like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;title&amp;gt;&amp;lt;?php wp_title( 'by', true, 'right' ); bloginfo( 'name' ); ?&amp;gt;&amp;lt;/title&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;However, this could improved (ex. using your name rather than the blog name). I&amp;#8217;ve found that the easiest way to manage titles and HTML meta tags is to use a WordPress SEO plugin.&lt;/p&gt;
+</content>
+ </entry>
+ 
+
+</feed>

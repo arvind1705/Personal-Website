@@ -1,0 +1,37 @@
+<!DOCTYPE html><html>
+<!-- Mirrored from christopher.su/2012/beginning-ios-development-apache-cordova/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 02 Aug 2017 17:06:52 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1"><title>Beginning iOS Development with Apache Cordova - Christopher Su</title><script src="../../cdn-cgi/apps/head/Md70coOFj-W1ipSNpRLrMg41doI.js"></script><link rel="stylesheet" href="../../public/css/custom.css"><link href="https://fonts.googleapis.com/css?family=Open+Sans:700,400|Droid+Serif:400,700,400italic" rel="stylesheet" type="text/css"><link rel="shortcut icon" href="../../public/favicon.ico"><link rel="alternate" type="application/rss+xml" title="RSS" href="../../atom.xml"></head><body><div class="container content"><div class="masthead"><h3 class="masthead-title"><a href="../../index.html" title="Home">Christopher Su</a> <span class="top-nav nav-bar"><span class="top-nav-item"><a href="../../about/index.html" title="About">About</a></span> <span class="top-nav-item"><a href="../../projects/index.html" title="Projects">Projects</a></span> <span class="top-nav-item"><a href="../../contact/index.html" " title="Contact">Contact</a></span> <span class="top-nav-item"><a href="../../index/index.html" title="More">More</a></span></span></h3></div> <nav id="breadcrumb-nav" class="nav-bar"><span class="csu-breadcrumb"><a href="../../index.html">Home</a></span><ol class="csu-breadcrumbs" vocab="http://schema.org/" typeof="BreadcrumbList"><li class="csu-breadcrumb" property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" href="../../blog/index.html"><span property="name">Blog</span></a><meta property="position" content="1"></li> <li class="csu-breadcrumb active" property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" href="index.html"><span property="name">Beginning iOS Development with Apache Cordova</span></a><meta property="position" content="2"></li></ol></nav> <div class="post"><div class="post-header"><h1 class="post-title">Beginning iOS Development with Apache Cordova</h1><span class="post-date">October 1, 2012</span></div><div class="post-content"><p>A quick guide to installing and beginning to develop with Apache Cordova on Mac.</p>
+
+<ol>
+  <li><a href="http://phonegap.com/download"><span style="line-height: 13px;">Download Phonegap</span></a></li>
+  <li><span style="line-height: 13px;">Unzip the archive. Move the folder to a permanent location. </span></li>
+  <li><span style="line-height: 13px;">Open the folder, go to the lib folder, go to iOS folder, go to the bin folder.</span></li>
+  <li><span style="line-height: 13px;">Open up a Terminal window.</span></li>
+  <li><span style="line-height: 13px;">Drag the create executable into the Terminal window. Type in the location of where you would like your project created. Type in the identifier for your project (ex. <code>com.christophersu.project</code>). Type in the name of your project. Hit enter. Example of what this should look like: <code>Christopher-Su:~ christophersu$ /Users/christophersu/Code/phonegap/lib/ios/bin/create ~/Code/ExampleProject com.christophersu.ExampleProject ExampleProject</code></span></li>
+  <li><span style="line-height: 13px;">Type in <code>cd</code> followed by the path to your project (ex. <code>Christopher-Su:~ christophersu$ cd ~/Code/ExampleProject</code>)</span></li>
+  <li><span style="line-height: 13px;">Type in <code>cordova/debug</code> to run the debug executable and build your project.</span></li>
+  <li><span style="line-height: 13px;">To emulate or simulate your project from the command line, run the <code>cordova/emulate</code> executable. Note that this requires ios-sim to be installed (see below).</span></li>
+</ol>
+
+<p><span style="line-height: 13px;">If you get an error telling you to install ios-sim when running the emulate executable, this is the fastest way to install ios-sim:</span></p>
+
+<ol>
+  <li>Run <code class="highlighter-rouge">ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"</code> in Terminal. This installs Homebrew.</li>
+  <li>Run <code class="highlighter-rouge">brew install ios-sim</code>. Wait for it to complete.</li>
+</ol>
+
+<p>That’s it! Output should look like this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Christopher-Su:~ christophersu$ brew install ios-sim
+==&gt; Downloading https://github.com/phonegap/ios-sim/tarball/1.5
+######################################################################## 100.0%
+==&gt; rake install prefix=/usr/local/Cellar/ios-sim/1.5
+/usr/local/Cellar/ios-sim/1.5: 4 files, 76K, built in 10 seconds
+Christopher-Su:~ christophersu$
+</code></pre>
+</div>
+
+</div></div><hr><div class="post-footer"><div id="comments"><h3>Comments</h3> <div id="disqus_thread"></div><script type="text/javascript">var disqus_shortname="christophersu";!function(){var e=document.createElement("script");e.type="text/javascript",e.async=!0,e.src="//"+disqus_shortname+".disqus.com/embed.js",(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(e)}();</script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></div><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script><div class="footer"><p class="copyright">&copy; 2012-2017 Christopher Su. All rights reserved.</p></div></div><script>!function(e,a,t,n,c,o,s){e.GoogleAnalyticsObject=c,e[c]=e[c]||function(){(e[c].q=e[c].q||[]).push(arguments)},e[c].l=1*new Date,o=a.createElement(t),s=a.getElementsByTagName(t)[0],o.async=1,o.src=n,s.parentNode.insertBefore(o,s)}(window,document,"script","../../../www.google-analytics.com/analytics.js","ga"),ga("create","UA-34248999-1","auto"),ga("send","pageview");</script> </body>
+<!-- Mirrored from christopher.su/2012/beginning-ios-development-apache-cordova/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 02 Aug 2017 17:06:52 GMT -->
+</html>

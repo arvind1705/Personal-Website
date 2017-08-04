@@ -1,0 +1,53 @@
+<!DOCTYPE html><html>
+<!-- Mirrored from christopher.su/2012/embedding-documents-google-docs/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 02 Aug 2017 17:06:50 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1"><title>Embedding Documents with Google Docs - Christopher Su</title><script src="../../cdn-cgi/apps/head/Md70coOFj-W1ipSNpRLrMg41doI.js"></script><link rel="stylesheet" href="../../public/css/custom.css"><link href="https://fonts.googleapis.com/css?family=Open+Sans:700,400|Droid+Serif:400,700,400italic" rel="stylesheet" type="text/css"><link rel="shortcut icon" href="../../public/favicon.ico"><link rel="alternate" type="application/rss+xml" title="RSS" href="../../atom.xml"></head><body><div class="container content"><div class="masthead"><h3 class="masthead-title"><a href="../../index.html" title="Home">Christopher Su</a> <span class="top-nav nav-bar"><span class="top-nav-item"><a href="../../about/index.html" title="About">About</a></span> <span class="top-nav-item"><a href="../../projects/index.html" title="Projects">Projects</a></span> <span class="top-nav-item"><a href="../../contact/index.html" " title="Contact">Contact</a></span> <span class="top-nav-item"><a href="../../index/index.html" title="More">More</a></span></span></h3></div> <nav id="breadcrumb-nav" class="nav-bar"><span class="csu-breadcrumb"><a href="../../index.html">Home</a></span><ol class="csu-breadcrumbs" vocab="http://schema.org/" typeof="BreadcrumbList"><li class="csu-breadcrumb" property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" href="../../blog/index.html"><span property="name">Blog</span></a><meta property="position" content="1"></li> <li class="csu-breadcrumb active" property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" href="index.html"><span property="name">Embedding Documents with Google Docs</span></a><meta property="position" content="2"></li></ol></nav> <div class="post"><div class="post-header"><h1 class="post-title">Embedding Documents with Google Docs</h1><span class="post-date">October 21, 2012</span></div><div class="post-content"><p>Embedding documents can provide a way for website visitors to view documents without having to download them to their computers. We used this on the <a href="http://18069595.nhd.weebly.com/interview-transcripts.html">interview transcript</a>, <a href="http://18069595.nhd.weebly.com/process-paper.html">process paper</a>, and <a href="http://18069595.nhd.weebly.com/annotated-bibliography.html">bibliography</a> pages of our website. This is a method to embed documents in Weebly without having to use Scribd.</p>
+
+<p><center><a href="http://18069595.nhd.weebly.com/frank-dikotter.html"><img class="alignnone  wp-image-579" title="Screen Shot 2012-10-21 at 9.10.22 AM" alt="" src="../../assets/uploads/2012/10/Screen-Shot-2012-10-21-at-9.10.22-AM-1024x530.jpg" width="737" height="382" /></a></center></p>
+
+<h3 id="instructions">Instructions</h3>
+
+<ol>
+<li>Upload the document through the Weebly editor using a file element.<sup><a class="footnote-link" href="#dont-delete">1</a></sup> Note: this only works for certain file types. Google Docs cannot embed <code>.docx</code> and <code>.doc</code> files. PDFs seem to work best, so export your Word documents as PDFs and upload those instead.</li>
+<li>Publish the website and visit the page with the newly uploaded document.</li>
+<li>Right click on the &#8220;Download file&#8221; link and choose &#8220;Copy Link Address&#8221; or equivalent.</li>
+<li>Paste your link into the field below and press "Generate HTML".</li>
+<li>Copy the HTML code that is generated for you.</li>
+<li>Go back to the Weebly editor, create an HTML element<sup><a class="footnote-link" href="#html-embed-element">2</a></sup> on the page, and paste the code you copied into it. Done!<sup><a class="footnote-link" href="#publish-done">3</a></sup></li>
+</ol>
+
+<p><label><b>Paste the link to your uploaded document:</b></label>
+<br />
+<input type="text" id="form-doc-url" name="doc-url" placeholder="Your document URL" size="35" style="font-size: 14pt;" /> 
+<button type="submit" id="form-submit" style="font-size: 14pt;">Generate HTML</button>
+<br />
+<br />
+<b>Generated HTML Code:</b>
+<br /></p>
+<textarea rows="4" cols="80" id="html-area" style="font-size: 12pt;" readonly=""></textarea>
+
+<p>Copy the code from the text box above and paste it into an HTML element in Weebly.</p>
+
+<p>Alternatively, you can manually edit the code below and add it into an HTML element:</p>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;iframe</span> <span class="na">style=</span><span class="s">"width: 900px; height: 900px;"</span> <span class="na">src=</span><span class="s">"INSERT LINK TO UPLOADED DOC BETWEEN QUOTES"</span> <span class="na">height=</span><span class="s">"240"</span> <span class="na">width=</span><span class="s">"320"</span> <span class="na">frameborder=</span><span class="s">"0"</span><span class="nt">&gt;&lt;/iframe&gt;</span>
+</code></pre>
+</div>
+
+<p>Once you’ve got the embedded file to appear, you can adjust the <code class="highlighter-rouge">height</code> and <code class="highlighter-rouge">width</code> numbers in the code to change the size of the embedded document.</p>
+
+<h3 id="footnotes">Footnotes</h3>
+<p><a class="footnote-anchor" name="dont-delete">1</a>: Don’t delete this file element, otherwise the file embed won’t work! Also note that this is not the “document” element, but rather the “file” element.<br />
+<a class="footnote-anchor" name="html-embed-element">2</a>: This might also be called an “embed code” element, or something along those lines, in the Weebly editor.<br />
+<a class="footnote-anchor" name="html-embed-element">3</a>: You might not see the embedded document until you publish the website and view it live.</p>
+</div></div><hr><div class="post-footer"><div id="comments"><h3>Comments</h3> <div id="disqus_thread"></div><script type="text/javascript">var disqus_shortname="christophersu";!function(){var e=document.createElement("script");e.type="text/javascript",e.async=!0,e.src="//"+disqus_shortname+".disqus.com/embed.js",(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(e)}();</script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></div><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script><div class="footer"><p class="copyright">&copy; 2012-2017 Christopher Su. All rights reserved.</p></div></div><script>!function(e,a,t,n,c,o,s){e.GoogleAnalyticsObject=c,e[c]=e[c]||function(){(e[c].q=e[c].q||[]).push(arguments)},e[c].l=1*new Date,o=a.createElement(t),s=a.getElementsByTagName(t)[0],o.async=1,o.src=n,s.parentNode.insertBefore(o,s)}(window,document,"script","../../../www.google-analytics.com/analytics.js","ga"),ga("create","UA-34248999-1","auto"),ga("send","pageview");</script> <script type="text/javascript" src="../../assets/js/jquery-1.10.2.min.js"></script>
+<script type='text/javascript'>
+  $(window).load(function(){
+    $('#form-submit').click(function() {
+       $('#html-area').val("<iframe style=\"width: 900px; height: 900px;\" src=\"http:\/\/docs.google.com\/gview?url=" + $('#form-doc-url').val() + "&embedded=true\" height=\"240\" width=\"320\" frameborder=\"0\"><\/iframe>");
+    });
+  });
+</script>
+</body>
+<!-- Mirrored from christopher.su/2012/embedding-documents-google-docs/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 02 Aug 2017 17:06:51 GMT -->
+</html>
