@@ -1,0 +1,92 @@
+.logo {
+  margin-left: 1%;
+}
+
+.home{
+  text-align: center;
+  padding-top: 3%;
+}
+
+.main-image {
+  width:30%;
+}
+
+.main-text {
+  width:50%;
+  margin-left:25%;
+  text-align: center;
+}
+
+.projects {
+  background: #E8E8E8;
+  height:100%;
+}
+
+.project-logo {
+  text-align: center;
+}
+
+a {
+  color: black;
+}
+
+.projects-main {
+  padding-top: 1%;
+}
+
+.card .card-image .card-size{
+  width:55%;
+  left: 22.5%;
+  padding-top:3%;
+}
+
+.card .card-image .blackbird-image{
+  width:55%;
+  left: 22.5%;
+  padding-top:7.5%;
+}
+
+
+.card .card-image .polly-image {
+  width: 15%;
+  margin-left: 42.5%;
+  padding-top: 15%;
+  padding-bottom: 5%;
+}
+
+.card .card-image .trojanviews-image {
+  width:55%;
+  left: 22.5%;
+  padding-top:15%;
+  padding-bottom: 5%;
+}
+
+body {
+    border: 1px solid transparent;
+}
+
+@media (max-width: 600px) {
+  .main-text {
+    width:75%;
+    margin-left:12.5%;
+    text-align: center;
+  }
+
+  .logo {
+    margin-left: 0%;
+  }
+}
+
+.contact {
+  height:100%;
+}
+
+.icons {
+  text-align: center;
+  margin-top: 2%;
+}
+
+.icon {
+  padding-left: 1%;
+  padding-right: 1%;
+}

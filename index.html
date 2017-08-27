@@ -1,26 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8">
-  <title>Aravind G</title>
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <link rel="stylesheet" media="screen" href="css/style.css">
+    <script src="https://use.fontawesome.com/b986e5a37d.js"></script>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="css/styles.css" media="screen,projection" />
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
+
 <body>
-
-<!-- count particles -->
-  
-<!-- particles.js container -->
-<div id="particles-js"></div>
-
-<!-- scripts -->
-<script src="particles.js"></script>
-<script src="js/app.js"></script>
-
-<!-- stats.js -->
-<script src="js/lib/stats.js"></script>
-
-
+    <nav>
+        <div class="nav-wrapper black">
+            <a href="#" class="logo brand-logo">Aravind G</a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="https://goo.gl/2gY7wm">Resume</a></li>
+                <li><a href="#contacts">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <div class="home">
+                    <h3>Hi, I'm Aravind.</h3>
+                    <img class="main-image responsive-img circle" src="images/main.jpg" />
+                    <p class="main-text">
+                        I am a Software Engineer and graduate of School of Engineering Jain University. After college, I will be working at PRDC. Previously, I've worked at Surisoft.net. In my spare time, I like to build websites and play Vainglory.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="projects" id="projects">
+        <div class="container projects-main">
+            <div class="row">
+                <h3 class="project-logo">Projects.</h3>
+            </div>
+            <div class="row">
+                <div class="col s12 m6">
+                    <div class="card">
+                        <a href="http://www.ballotview.org">
+                            <div class="card-image">
+                                <img src="images/15658638.png" class="card-size ">
+                            </div>
+                            <div class="card-content">
+                                <span class="card-title">Tensorflow Image Classifier</span>
+                                <p>
+                                    Offline Image classifier built using open source machine learning library Tensorflow. Results obtained were pretty much satisfying.
+                                </p>
+                                <br />
+                                <div class="chip">Python</div>
+                                <div class="chip">Machine Learning</div>
+                                <div class="chip">Image Processing</div>
+                                <div class="chip">Docker</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col s12 m6">
+                    <div class="card">
+                        <a href="http://www.blackbirdstudios.io">
+                            <div class="card-image">
+                                <img src="images/123.png" class="blackbird-image">
+                            </div>
+                            <div class="card-content">
+                                <span class="card-title">Discord Bot</span>
+                                <p>
+                                    Various chatbots were built using python. Results bot for displaying university results of Jain University
+                                </p>
+                                <br />
+                                <div class="chip">Python</div>
+                                <div class="chip">Discord</div>
+                                <div class="chip">Chatbot</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- <div class="col s12 m6">
+            <div class="card">
+              <a href="http://trojanviews.herokuapp.com">
+                <div class="card-image">
+                  <img src="images/Trojanviews.png" class="trojanviews-image">
+                </div>
+                <div class="card-content">
+                  <span class="card-title">Charity Management</span>
+                  <p>
+                    TrojanViews is a platform for USC students for course and professor reviews.
+                    It facilitates more informed decisions about classes and professors to take at USC. I was one of four engineers for the project.
+                  </p>
+                  <br />
+                  <div class="chip">Ruby on Rails</div>
+                  <div class="chip">React</div>
+                  <div class="chip">PostgreSQL</div>
+                  <div class="chip">Heroku</div>
+                </div>
+              </a>
+            </div>
+          </div> -->
+                <!-- <div class="col s12 m6">
+            <div class="card">
+              
+              <div class="card-image">
+                <img src="images/logo.png" class="polly-image">
+              </div>
+              <div class="card-content">
+                <span class="card-title">Polly</span>
+                <p>
+                  Polly is a web application that allows for easy check in and offers advanced attendance analysis.
+                  I worked on building the prototype in Rails and then built the Rails API which interacted with an Ember client. I built this while working in Blackbird.
+                </p>
+                <br />
+                <div class="chip">Ruby on Rails</div>
+                <div class="chip">Ember</div>
+                <div class="chip">Docker</div>
+                <div class="chip">PostgreSQL</div>
+              </div>
+              
+            </div>
+          </div> -->
+            </div>
+        </div>
+    </div>
+    <div class="contact black" id="contacts">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 icons">
+                    <a href="https://www.linkedin.com/in/aravind-g-97a985b5/"><i class="fa fa-linkedin-square icon fa-4x fa-inverse" aria-hidden="true"></i></a>
+                    <a href="mailto:g.aravind4@gmail.com"><i class="fa fa-envelope icon fa-4x fa-inverse" aria-hidden="true"></i> </a>
+                    <a href="https://github.com/arvind1705"><i class="fa fa-github icon fa-4x fa-inverse" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
 </body>
+
 </html>
